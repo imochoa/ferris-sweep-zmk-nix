@@ -20,3 +20,8 @@ flash-kb:
 
 build-firmware:
   nix build .#firmware
+
+# TODO look into watchman!
+# \ls ./flake.nix |  entr -d -c just layout-img
+layout-img:
+  nix build .#layoutImage

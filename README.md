@@ -1,5 +1,8 @@
 # ZMK
 
+- format with https://github.com/mskelton/dtsfmt?
+- https://github.com/benvallack/zmk-config-piano/blob/main/config/boards/shields/piano/piano.keymap
+
 ## [Adding ZMK Studio Support](https://zmk.dev/docs/features/studio#adding-zmk-studio-support-to-a-keyboard)
 
 > Firmware with ZMK Studio enabled require significantly more RAM. Some MCUs, such as the STM32F072 series, will require fine tuning of various settings in order to reduce the RAM consumption enough for a Studio enabled build to fit.

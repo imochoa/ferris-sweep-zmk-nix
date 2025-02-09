@@ -25,3 +25,11 @@ build-firmware:
 # \ls ./flake.nix |  entr -d -c just layout-img
 layout-img:
   nix build .#layoutImage
+
+# alias -g fullauto="find \$PWD -name '.*' -prune -o -print | entr zsh -c \"git commit -am 'auto' && git push\""
+
+develop-layout:
+  # @just layout-img
+  # fd -epdf . result/ | head -n1 | xargs xdg-open
+  find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage && fd -epdf . result/ | head -n1 | xargs xdg-open'
+  # \ls "config/" | entr -d nix build .#layoutImage

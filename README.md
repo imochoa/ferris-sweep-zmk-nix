@@ -2,6 +2,7 @@
 
 - format with https://github.com/mskelton/dtsfmt?
 - https://github.com/benvallack/zmk-config-piano/blob/main/config/boards/shields/piano/piano.keymap
+- https://peccu.github.io/zmk-cheat-sheet/
 
 ## [Adding ZMK Studio Support](https://zmk.dev/docs/features/studio#adding-zmk-studio-support-to-a-keyboard)
 

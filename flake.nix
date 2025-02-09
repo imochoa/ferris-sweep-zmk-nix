@@ -15,13 +15,13 @@
     }:
     let
       forAllSystems = nixpkgs.lib.genAttrs (nixpkgs.lib.attrNames zmk-nix.packages);
+      lib = nixpkgs.lib;
     in
     {
       packages = forAllSystems (
         system:
         let
           pkgs = nixpkgs.legacyPackages.${system};
-          lib = nixpkgs.lib;
         in
         rec {
           default = firmware;

@@ -30,10 +30,6 @@
 
           update = zmk-nix.packages.${system}.update;
 
-          devShells = forAllSystems (system: {
-            default = zmk-nix.devShells.${system}.default;
-          });
-
           firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
             # Need to be configured!
             board = "nice_nano_v2";
@@ -133,5 +129,10 @@
 
         }
       );
+
+      devShells = forAllSystems (system: {
+        default = zmk-nix.devShells.${system}.default;
+      });
+
     };
 }

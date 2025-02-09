@@ -2,7 +2,7 @@ name: Flake
 
 on:
   schedule:
-    - cron: '0 0 * * 0'
+    - cron: "0 0 * * 0"
   workflow_dispatch:
 
 jobs:
@@ -21,9 +21,9 @@ jobs:
       - id: update-flake-lock
         uses: DeterminateSystems/update-flake-lock@v21
         with:
-          commit-msg: 'flake: update inputs'
-          pr-title: 'flake: update inputs'
-          pr-labels: 'dependencies'
+          commit-msg: "flake: update inputs"
+          pr-title: "flake: update inputs"
+          pr-labels: "dependencies"
 
       - uses: benc-uk/workflow-dispatch@v1
         if: ${{ contains(fromJSON('["created", "updated"]'), steps.update-flake-lock.outputs.pull-request-operation) }}

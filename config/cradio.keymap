@@ -12,6 +12,7 @@
 #include <dt-bindings/zmk/pointing.h>
 
 // https://peccu.github.io/zmk-cheat-sheet/
+// https://franknoirot.co/posts/ferris-sweep-keyboard-layout
 //
 // https://zmk.dev/docs/keymaps/list-of-keycodes
 
@@ -87,19 +88,21 @@
 //	    layers = <SYS>;
 //        };
 //
-//   };
-//
-//   // https://zmk.dev/docs/keymaps/behaviors/macros
-//    macros {
-//        zed_em_kay: zed_em_kay {
-//            compatible = "zmk,behavior-macro";
-//            #binding-cells = <0>;
-//            bindings
-//                = <&macro_press &kp LSHFT>
-//                , <&macro_tap &kp Z &kp M &kp K>
-//                , <&macro_release &kp LSHFT>
-//                ;
-//        };
+    };
+
+// https://zmk.dev/docs/keymaps/behaviors/macros
+    macros {
+        dodgeslide: dodgeslide {
+            label = "Darktide Dodge Slide";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>; // Number of arguments
+            wait-ms = <40>;
+            bindings
+                = <&macro_tap &kp TAB>
+                , <&macro_wait_time 200>
+                , <&macro_tap &kp LCTRL>
+                ;
+        };
     };
   
 
@@ -213,18 +216,18 @@
         // LAYER 4
         gaming_layer {
             display-name = "Gaming";
-            bindings = <
-            &kp N1    &kp N2 &kp N3 &kp N4   &kp N5       &trans &trans &trans &trans &trans
-            &kp LSHFT &kp A  &kp W  &kp D    &kp R        &trans &trans &trans &trans &trans 
-            &kp LCTRL &kp G  &kp S  &kp E    &kp F        &trans &trans &trans &trans &trans 
-                                    &mkp MB3 &kp SPACE    &trans &trans
-            >; // &kb MB3 = mouse button 3 // kb?????
+            bindings = < 
+            &kp N1    &kp N2 &kp N3 &kp N4      &kp N5       &trans &trans &trans &trans &trans
+            &kp LSHFT &kp A  &kp W  &kp D       &kp R        &trans &trans &trans &trans &trans 
+            &kp LCTRL &kp G  &kp S  &kp E       &kp F        &trans &trans &trans &trans &trans 
+                                    &dodgeslide &kp SPACE    &trans &trans
+            >; // &mkp MB3 // mouse button 3
         };
 
-//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-//                                 &trans &trans &trans &trans
+// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+//                      &trans &trans &trans &trans
 
 //╭────┬──────┬──────┬─────┬──────╮   ╭─────┬─────┬──────┬──────┬──────╮
 //│ 0  │  1   │  2   │  3  │  4   │   │  5  │ 6   │  7   │  8   │  9   │

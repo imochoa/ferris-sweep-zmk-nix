@@ -8,6 +8,9 @@
 #include <dt-bindings/zmk/bt.h> // https://github.com/zmkfirmware/zmk/blob/main/app/include/dt-bindings/zmk/bt.h
 
 
+// Enable Mouse
+#include <dt-bindings/zmk/pointing.h>
+
 // https://peccu.github.io/zmk-cheat-sheet/
 //
 // https://zmk.dev/docs/keymaps/list-of-keycodes

@@ -1,15 +1,93 @@
 // Copyright (c) 2022 The ZMK Contributors
 // SPDX-License-Identifier: MIT
 
-#include <behaviors.dtsi>
-#include <dt-bindings/zmk/keys.h>
-#include <dt-bindings/zmk/bt.h>
+// Origin: https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/cradio/cradio.keymap
+
+#include <behaviors.dtsi> // https://github.com/zmkfirmware/zmk/blob/main/app/dts/behaviors.dtsi
+#include <dt-bindings/zmk/keys.h> // https://github.com/zmkfirmware/zmk/blob/main/app/include/dt-bindings/zmk/keys.h
+#include <dt-bindings/zmk/bt.h> // https://github.com/zmkfirmware/zmk/blob/main/app/include/dt-bindings/zmk/bt.h
+
+
+// https://peccu.github.io/zmk-cheat-sheet/
+//
+// https://zmk.dev/docs/keymaps/list-of-keycodes
+
+// Kinesis
+//
+// LEFT
+// Shift  
+// LEFT THUMB Ctrl Alt Back Del
+//
+// RIGHT
+// Shift
+// RIGHT THUMB Alt Ctrl Enter Space (windows)
+
+        // To flash:
+        // 2x reset OR Bootloader 
+
 
 // Home row mods macro
-#define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT k2  &ht LCTRL k3  &ht LGUI k4
-#define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3  &ht RSHFT k4
+#define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT  k2  &ht LCTRL k3  &ht LGUI  k4
+#define HRMR(k1,k2,k3,k4) &ht RGUI  k1  &ht RCTRL k2  &ht RALT  k3  &ht RSHFT k4
+
+#define L_B 0
+#define L_R 1
+#define L_L 2
+#define L_T 3
+#define L_G 4
+// so you can do -> &tog  MOU
 
 / {
+//        combo_esc {
+//            timeout-ms = <50>;
+//            key-positions = <0 1>; // INPUT
+//            layers = <0 1>;
+//            bindings = <&kp ESC>; // OUTPUT
+//        };
+//
+//        combo_caps {
+//            timeout-ms = <30>;
+//	    key-positions = <10 11 12>;
+//            bindings = <&caps_word>;
+//        };
+//        combo_bt  {
+//            timeout-ms = <10>;
+//            key-positions = <11 12>;
+//            bindings = <&to BT>;
+//	    layers = <SM1>; 
+//        };
+//        lalt {
+//            timeout-ms = <20>;
+//	    key-positions = <8 9>;
+//            bindings = <&kp LALT>; 
+//	    layers = <SYS>; 
+//        };
+//        lclk {
+//            timeout-ms = <20>;
+//	    key-positions = <10 11>;
+//            bindings = <&mkp LCLK>;
+//	    layers = <SYS>;
+//        };
+//        rclk {
+//            timeout-ms = <20>;
+//	    key-positions = <3 4>;
+//            bindings = <&mkp RCLK>;
+//	    layers = <SYS>;
+//        };
+//
+//   };
+//
+//   // https://zmk.dev/docs/keymaps/behaviors/macros
+//    macros {
+//        zed_em_kay: zed_em_kay {
+//            compatible = "zmk,behavior-macro";
+//            #binding-cells = <0>;
+//            bindings
+//                = <&macro_press &kp LSHFT>
+//                , <&macro_tap &kp Z &kp M &kp K>
+//                , <&macro_release &kp LSHFT>
+//                ;
+//        };
    // https://zmk.dev/docs/keymaps/behaviors#key-press-behaviors
     behaviors {
         ht: hold_tap {
@@ -34,14 +112,16 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
-            if-layers = <1 2>;
-            then-layer = <3>;
+            if-layers = <L_R L_L>;
+            then-layer = <L_T>;
         };
     };
 
     keymap {
         compatible = "zmk,keymap";
-        default_layer {
+        // LAYER 0
+        default_layer { 
+            display-name = "Base";
             bindings = <
         //╭──────────┬──────────┬──────────┬────────────┬──────────╮   ╭──────────┬────────────┬──────────┬──────────┬──────────╮
         //│  Q       │  W       │  E       │  R         │  T       │   │  Y       │    U       │  I       │  O       │  P       │
@@ -53,12 +133,14 @@
         //│  Z       │  X       │  C       │  V         │  B       │   │  N       │    M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V        &kp B          &kp N        &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┴──────────┴──────────╯
-                                            &lt 2 BSPC    &kp TAB       &kp ENTER  &lt 1 SPACE
+                                            &lt L_L BSPC    &kp TAB       &kp ENTER  &lt L_R SPACE
         //                                 ╰────────────┴──────────╯   ╰──────────┴────────────╯
             >;
         };
 
+        // LAYER 1
         right_layer {
+            display-name = "Right Layer";
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│ INSERT   │  1       │  2       │  3       │          │   │ HOME     │ PAGE DN  │ PAGE UP  │ END      │  :       │
@@ -75,7 +157,9 @@
             >;
         };
 
+        // LAYER 2
         left_layer {
+            display-name = "Left Layer";
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│          │  [       │  {       │  }       │          │   │  ^       │  (       │  )       │  ]       │  ~       │
@@ -92,7 +176,9 @@
             >;
         };
 
+        // LAYER 3
         tri_layer {
+            display-name = "Tri";
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│ RESET    │          │          │          │PROFILE 0 │   │          │          │          │          │  RESET   │
@@ -108,5 +194,31 @@
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
+//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+//            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+//                                 &trans &trans &trans &trans
+
+//╭────┬──────┬──────┬─────┬──────╮   ╭─────┬─────┬──────┬──────┬──────╮
+//│ 0  │  1   │  2   │  3  │  4   │   │  5  │ 6   │  7   │  8   │  9   │
+//├────┼──────┼──────┼─────┼──────┤   ├─────┼─────┼──────┼──────┼──────┤
+//│ 10 │  11  │  12  │  13 │  14  │   │  15 │ 16  │  17  │  18  │  19  │
+//├────┼──────┼──────┼─────┼──────┤   ├─────┼─────┼──────┼──────┼──────┤
+//│ 20 │  21  │  22  │  23 │  24  │   │  25 │ 26  │  27  │  28  │  29  │
+//╰────┴──────┴──────┼─────┼──────┤   ├─────┼─────┼──────┴──────┴──────╯
+//                   │  30 │  31  │   │  32 │ 33  │
+//                   ╰─────┴──────╯   ╰─────┴─────╯
+
+
+//╭──────────┬──────────┬──────────┬────────────┬──────────╮   ╭──────────┬────────────┬──────────┬──────────┬──────────╮
+//│  Q       │  W       │  E       │  R         │  T       │   │  Y       │    U       │  I       │  O       │  P       │
+//├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
+//│  A       │  S       │  D       │  F         │  G       │   │  H       │    J       │  K       │  L       │ ' "      │
+//├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
+//│  Z       │  X       │  C       │  V         │  B       │   │  N       │    M       │ , <      │ . >      │ / ?      │
+//╰──────────┴──────────┴──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┴──────────┴──────────╯
+//                                 ╰────────────┴──────────╯   ╰──────────┴────────────╯
+
+
     };
 };

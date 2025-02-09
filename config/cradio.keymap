@@ -41,6 +41,10 @@
 // so you can do -> &tog  MOU
 
 / {
+
+  // https://zmk.dev/docs/keymaps/combos
+    combos {
+        compatible = "zmk,combos";
 //        combo_esc {
 //            timeout-ms = <50>;
 //            key-positions = <0 1>; // INPUT
@@ -48,6 +52,11 @@
 //            bindings = <&kp ESC>; // OUTPUT
 //        };
 //
+        gaming_layer_toggle {
+            timeout-ms = <50>;
+	          key-positions = <30 31 32 33>;
+            bindings = <&tog L_G>;
+        };
 //        combo_caps {
 //            timeout-ms = <30>;
 //	    key-positions = <10 11 12>;
@@ -91,6 +100,10 @@
 //                , <&macro_release &kp LSHFT>
 //                ;
 //        };
+    };
+  
+
+
    // https://zmk.dev/docs/keymaps/behaviors#key-press-behaviors
     behaviors {
         ht: hold_tap {
@@ -197,6 +210,17 @@
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
+        // LAYER 4
+        gaming_layer {
+            display-name = "Gaming";
+            bindings = <
+            &kp N1    &kp N2 &kp N3 &kp N4   &kp N5       &trans &trans &trans &trans &trans
+            &kp LSHFT &kp A  &kp W  &kp D    &kp R        &trans &trans &trans &trans &trans 
+            &kp LCTRL &kp G  &kp S  &kp E    &kp F        &trans &trans &trans &trans &trans 
+                                    &mkp MB3 &kp SPACE    &trans &trans
+            >; // &kb MB3 = mouse button 3 // kb?????
+        };
+
 //            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 //            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
 //            &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 

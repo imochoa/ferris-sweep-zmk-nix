@@ -42,11 +42,8 @@
 
 #define BAS 0
 #define SYM 1
-#define LEF 2
-#define TRI 3
-#define NUM 4
-#define NAV 5
-#define GAM 6
+#define NUM 2
+#define SYS 3
 
 // Unicode keys
 // https://askubuntu.com/questions/1171633/i-can-use-alt-x-to-enter-unicode-on-an-old-machine-how-is-this-possible
@@ -78,55 +75,49 @@
         compatible = "zmk,combos";
         // Keys
         combo_esc {
-            timeout-ms = <50>;
             key-positions = <10 19>; // INPUT
-            layers = < BAS >;
+            timeout-ms = <50>;
+            layers = < BAS SYM >;
             bindings = <&kp ESC>; // OUTPUT
         };
         combo_windows {
-            timeout-ms = <50>;
             key-positions = <13 16>;
-            layers = < BAS >;
+            timeout-ms = <50>;
+            layers = < BAS SYM >;
             bindings = <&kp LWIN>;
         };
 
         // Layers
-        gaming_layer_toggle {
+        // gaming_layer_toggle {
+        //     key-positions = <0 10 20>;
+        //     timeout-ms = <50>;
+        //     layers=<BAS GAM>;
+        //     bindings = <&tog GAM>;
+        // };
+        combo_to_sys_layer {
             timeout-ms = <50>;
-	          key-positions = <0 10 20>;
-            layers=<BAS GAM>;
-            bindings = <&tog GAM>;
+	        key-positions = <4 14 24>;
+            layers=<BAS SYS>;
+            bindings = <&to SYS>;
         };
-//        combo_caps {
-//            timeout-ms = <30>;
-//	    key-positions = <10 11 12>;
-//            bindings = <&caps_word>;
-//        };
-//        combo_bt  {
-//            timeout-ms = <10>;
-//            key-positions = <11 12>;
-//            bindings = <&to BT>;
-//	    layers = <SM1>; 
-//        };
-//        lalt {
-//            timeout-ms = <20>;
-//	    key-positions = <8 9>;
-//            bindings = <&kp LALT>; 
-//	    layers = <SYS>; 
-//        };
-//        lclk {
-//            timeout-ms = <20>;
-//	    key-positions = <10 11>;
-//            bindings = <&mkp LCLK>;
-//	    layers = <SYS>;
-//        };
-//        rclk {
-//            timeout-ms = <20>;
-//	    key-positions = <3 4>;
-//            bindings = <&mkp RCLK>;
-//	    layers = <SYS>;
-//        };
-//
+        // combo_to_base_layer {
+        //     timeout-ms = <50>;
+	    //     key-positions = <31 32>;
+        //     layers=<SYM NUM SYS>;
+        //     bindings = <&to BAS>;
+        // };
+        // combo_to_sym_layer {
+        //     timeout-ms = <50>;
+	    //     key-positions = <31 33>;
+        //     layers = <BAS NUM>;
+        //     bindings = <&to SYM>;
+        // };
+        // combo_to_num_layer {
+        //     timeout-ms = <50>;
+	    //     key-positions = <30 32>;
+        //     layers = <BAS SYM>;
+        //     bindings = <&to NUM>;
+        // };
     };
 
 // |  {{{1 Macros
@@ -198,15 +189,15 @@
             tapping-term-ms = <200>;
             bindings = <&kp N1>, <&kp N2>, <&kp N3>; // outputs
         };
-        td_currency: td_currency {
-            compatible = "zmk,behavior-tap-dance";
-            label = "TAPDANCE Currency";
-            #binding-cells = <0>;
-            tapping-term-ms = <150>;
-            // quick-tap-ms = <0>;
-            // flavor="tap-preferred";
-            bindings = <&kp DOLLAR>, <&euro_macro>;
-        };
+        // td_currency: td_currency {
+        //     compatible = "zmk,behavior-tap-dance";
+        //     label = "TAPDANCE Currency";
+        //     #binding-cells = <0>;
+        //     tapping-term-ms = <150>;
+        //     // quick-tap-ms = <0>;
+        //     // flavor="tap-preferred";
+        //     bindings = <&kp DOLLAR>, <&euro_macro>;
+        // };
     };
 
 // |  {{{1 conditional-layers
@@ -218,6 +209,10 @@
 //        };
     };
 
+    // #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT  k2  &ht LCTRL k3  &ht LGUI  k4
+    // #define HRMR(k1,k2,k3,k4) &ht RGUI  k1  &ht RCTRL k2  &ht RALT  k3  &ht RSHFT k4
+    
+
 // |  {{{1 Keymap
     keymap {
         compatible = "zmk,keymap";
@@ -225,10 +220,10 @@
         default_layer { 
             display-name = "Base";
             bindings = <
-            &kp Q   &kp W   &kp E  &kp R         &kp T         &kp Y        &kp U      &kp I      &kp O      &kp P
-            HRML(A,     S,      D,     F)        &kp G         &kp H        HRMR(J,        K,         L,        SQT)
-            &kp Z   &kp X   &kp C  &kp V         &kp B         &kp N        &kp M      &mt SEMI COMMA  &mt COLON DOT  &mt BSLH FSLH
-                                   &trans        &kp BSPC      &kp SPACE    &to SYM
+            &kp Q   &kp W   &kp E        &kp R         &kp T             &kp Y        &kp U      &kp I      &kp O      &kp P
+            &kp A   &kp S   &ht LALT D  &ht LGUI  F   &kp G             &kp H        &ht RGUI  J  &ht RALT K       &kp  L       &kp SQT
+            &kp Z   &kp X   &kp C        &kp V         &kp B             &kp N        &kp M      &mt SEMI COMMA  &mt COLON DOT  &mt BSLH FSLH
+                                         &kp SPACE     &sk LSHFT         &sk RCTRL    &to SYM 
             >;
         };
 
@@ -236,72 +231,69 @@
         symbols_layer {
             display-name = "Symbols";
             bindings = <
-            &kp EXCL   &kp AT     &kp HASH   &kp DOLLAR  &kp PRCNT      &kp CARET   &kp AMPS  &kp STAR  &kp COLON &kp BSPC
-            // &kp ESC   &kp AT     &kp SEMI   &kp COLON  &kp TILDE      &kp APOS   &kp LBKT  &kp RBKT  &kp LT    &kp GT
-            &kp TAB   &kp QMARK  &kp COMMA  &kp DOT    &euro_macro       &kp DQT    &kp LPAR  &kp RPAR  &kp COLON    &kp ENTER
-            &kp BSLH  &kp PIPE   &kp FSLH   &kp AMPS   &kp HASH        &kp GRAVE  &kp LBRC  &kp RBRC  &kp SEMI    &to NAV
-                                            &to BAS    &kp ESC        &kp RALT   &to NUM
+            &kp EXCL          &kp AT          &kp HASH      &kp DOLLAR      &kp PRCNT      &kp CARET &kp AMPS       &kp STAR       &mt SEMI COLON &kp BKSP
+            &kp TAB           &kp EQUAL       &ht LALT LBKT &ht LGUI  RBKT  &kp PIPE       &kp FSLH  &ht RGUI LPAR  &ht RALT RPAR  &kp DQT        &kp ENTER
+            &mt GRAVE TILDE  &mt UNDER MINUS  &kp LBRC      &kp RBRC        &kp PLUS       &kp BSLH  &kp LT         &kp GT         &kp QMARK      &trans
+                                                            &to BAS         &sk LSHFT      &sk RCTRL  &to NUM
             >;
-        };
+        }; 
 
         // {{{1 LAYER 2
-        left_layer {
-            display-name = "Left Layer";
+        num_layer {
+            display-name = "Numbers";
             bindings = <
-            &trans     &kp LBKT   &kp LBRC   &kp RBRC   &trans         &kp CARET  &kp LPAR   &kp RPAR   &kp RBKT   &kp TILDE
-            &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT      &kp ASTRK  &kp MINUS  &kp EQUAL  &kp BSLH   &kp GRAVE
-            &trans     &trans     &trans     &trans     &trans         &kp AMPS   &kp UNDER  &kp PLUS   &kp PIPE   &trans
-                                             &trans     &trans         &trans     &trans
-            >;
+        		&trans   &trans    &trans        &trans         &trans 	         	&kp MINUS  &kp N7       &kp N8      &kp N9    &kp BKSP
+        		&kp TAB  &kp EQUAL &ht LALT LBKT &ht LGUI  RBKT  &kp PIPE   	    &kp EQUAL  &ht RGUI N4  &ht RALT N5 &kp N6    &kp ENTER
+        		&trans   &trans    &trans        &trans         &trans   	        &kp N0     &kp N1       &kp N2       &kp N3   &trans
+                                                  &to BAS       &sk LSHFT           &sk RCTRL  &to SYM
+		        >;
         };
+        // left_layer {
+        //     display-name = "Left Layer";
+        //     bindings = <
+        //     &trans     &kp LBKT   &kp LBRC   &kp RBRC   &trans         &kp CARET  &kp LPAR   &kp RPAR   &kp RBKT   &kp TILDE
+        //     &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT      &kp ASTRK  &kp MINUS  &kp EQUAL  &kp BSLH   &kp GRAVE
+        //     &trans     &trans     &trans     &trans     &trans         &kp AMPS   &kp UNDER  &kp PLUS   &kp PIPE   &trans
+        //                                      &trans     &trans         &trans     &trans
+        //     >;
+        // };
 
         // {{{1 LAYER 3
-        tri_layer {
-            display-name = "Tri";
+        sys_layer {
+            display-name = "System";
             bindings = <
-            &sys_reset  &trans     &trans     &trans    &bt BT_SEL 0    &trans     &trans     &trans     &trans    &sys_reset
-            &bootloader  &trans     &trans     &trans    &bt BT_SEL 1    &trans     &trans     &trans  &studio_unlock  &bootloader
-            &trans     &trans     &trans    &bt BT_CLR   &bt BT_SEL 2    &trans     &trans     &trans     &trans     &trans
-                                             &trans     &trans         &trans     &trans
+            &bootloader  &none     &none           &none          &sys_reset          &sys_reset   &none        &none        &none    &bootloader
+            &none       &none     &bt BT_SEL 1     &bt BT_SEL 0    &none              &none       &bt BT_SEL 2  &bt BT_SEL 3  &none    &none
+            &none       &none     &none           &none          &bt BT_CLR          &none       &none        &none        &none    &studio_unlock
+                                                     &to BAS         &none              &none       &none
             >;
         };
 
         // {{{1 LAYER 4
-        num_layer {
-            display-name = "Numbers";
-            bindings = <
-        		&trans   &trans    &trans &trans   &trans 	         	&kp MINUS &kp N7 &kp N8 &kp N9 &kp BKSP
-        		&trans   &trans    &trans &trans   &trans  	         	&kp EQUAL &kp N4 &kp N5 &kp N6 &kp ENTER 
-        		&trans   &trans    &trans &trans   &trans   	         	&kp N0    &kp N1 &kp N2 &kp N3 &to NAV
-        					    &to BAS             &trans  		         	&sk RALT  &to SYM
-		        >;
-        };
+
+
+        // nav_layer {
+        //     display-name = "Nav";
+        //     bindings = <
+        // 		// &trans  &mwh SCROLL_LEFT    &mmv MOVE_UP    &mwh SCROLL_RIGHT    &kp NUM_5 			&kp LG(LBKT)   &kp LC(LS(TAB))   &kp RC(TAB) &kp LG(RBKT) &trans
+        // 		// &kp F1 &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &kp DEL  						&kp LEFT &kp DOWN  &kp UP &kp RIGHT &kp ENTER 
+        // 		// &td LG(GRAVE) GRAVE &mkp RCLK  &mwh SCROLL_UP &mwh SCROLL_DOWN &trans   				&mkp LCLK &kp PG_DN  &kp K_VOL_DN  &trans &trans   
+        // 		// 			 &to 0 &trans  					&sk RALT &to 1 
+		//         >;
+        // };
 
         // {{{1 LAYER 5
-        nav_layer {
-            display-name = "Nav";
-            bindings = <
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-                                    &trans &trans &trans &trans
 
-        		// &trans  &mwh SCROLL_LEFT    &mmv MOVE_UP    &mwh SCROLL_RIGHT    &kp NUM_5 			&kp LG(LBKT)   &kp LC(LS(TAB))   &kp RC(TAB) &kp LG(RBKT) &trans
-        		// &kp F1 &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &kp DEL  						&kp LEFT &kp DOWN  &kp UP &kp RIGHT &kp ENTER 
-        		// &td LG(GRAVE) GRAVE &mkp RCLK  &mwh SCROLL_UP &mwh SCROLL_DOWN &trans   				&mkp LCLK &kp PG_DN  &kp K_VOL_DN  &trans &trans   
-        		// 			 &to 0 &trans  					&sk RALT &to 1 
-		        >;
-        };
-        // {{{1 LAYER 6
-        gaming_layer {
-            display-name = "Gaming";
-            bindings = < 
-            &kp N1    &kp N2 &kp N3 &kp N4      &kp N5       &trans &trans &trans &trans &trans
-            &kp LSHFT &kp A  &kp W  &kp D       &kp R        &trans &trans &trans &trans &trans 
-            &kp LCTRL &kp G  &kp S  &kp E       &kp F        &trans &trans &trans &trans &trans 
-                                    &dodgeslide &kp SPACE    &trans &trans
-            >; // &mkp MB3 // mouse button 3
-        };
+        // // {{{1 LAYER 6
+        // gaming_layer {
+        //     display-name = "Gaming";
+        //     bindings = < 
+        //     &kp N1    &kp N2 &kp N3 &kp N4      &kp N5       &trans &trans &trans &trans &trans
+        //     &kp LSHFT &kp A  &kp W  &kp D       &kp R        &trans &trans &trans &trans &trans 
+        //     &kp LCTRL &kp G  &kp S  &kp E       &kp F        &trans &trans &trans &trans &trans 
+        //                             &dodgeslide &kp SPACE    &trans &trans
+        //     >; // &mkp MB3 // mouse button 3
+        // };
     };
 };
 
@@ -311,15 +303,6 @@
 // &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
 // &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
 //                      &trans &trans &trans &trans
-
-//╭──────────┬──────────┬──────────┬────────────┬──────────╮   ╭──────────┬────────────┬──────────┬──────────┬──────────╮
-//│  Q       │  W       │  E       │  R         │  T       │   │  Y       │    U       │  I       │  O       │  P       │
-//├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
-//│  A       │  S       │  D       │  F         │  G       │   │  H       │    J       │  K       │  L       │ ' "      │
-//├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
-//│  Z       │  X       │  C       │  V         │  B       │   │  N       │    M       │ , <      │ . >      │ / ?      │
-//╰──────────┴──────────┴──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┴──────────┴──────────╯
-//                                 ╰────────────┴──────────╯   ╰──────────┴────────────╯
 
 
 // vim:fdm=marker:fen:fdl=0:

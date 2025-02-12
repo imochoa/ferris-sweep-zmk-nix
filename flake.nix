@@ -62,70 +62,79 @@
 
           layoutImage =
             let
-              # (not in nixpkgs)
-              py-tree-sitter-devicetree = pkgs.python3Packages.buildPythonPackage rec {
-                name = "tree-sitter-devicetree";
-                version = "v0.12.1";
-                src = pkgs.fetchFromGitHub {
-                  owner = "joelspadin";
-                  repo = "${name}";
-                  rev = "${version}";
-                  sha256 = "sha256-UVxLF4IKRXexz+PbSlypS/1QsWXkS/iYVbgmFCgjvZM=";
-                };
-                pyproject = true;
-                build-system = [ pkgs.python3Packages.setuptools ];
-                # metadata?
-              };
-              # (not in nixpkgs)
-              keymap-drawer = pkgs.python3Packages.buildPythonPackage rec {
-                name = "keymap-drawer";
-                version = "v0.20.0";
-                src = pkgs.fetchFromGitHub {
-                  owner = "caksoylar";
-                  repo = "${name}";
-                  rev = "main";
-                  sha256 = "sha256-bNXx1JwzzJUROBXtR7jxuNFrC6uKFADp0dzJ00s3O7o=";
-                };
-                pyproject = true;
-                build-system = [ pkgs.python3Packages.poetry-core ];
-                propagatedBuildInputs =
-                  with pkgs.python3Packages;
-                  [
-                    pcpp
-                    platformdirs
-                    pydantic
-                    pydantic-settings
-                    pyparsing
-                    pyyaml
-                    tree-sitter
-                  ]
-                  ++ [ py-tree-sitter-devicetree ];
-                meta = {
-                  homepage = "https://github.com/caksoylar/keymap-drawer";
-                  description = "Visualize keymaps that use advanced features like hold-taps and combos, with automatic parsing ";
-                  license = lib.licenses.mit;
-                };
-              };
+              #   # (not in nixpkgs)
+              #   py-tree-sitter-devicetree = pkgs.python3Packages.buildPythonPackage rec {
+              #     name = "tree-sitter-devicetree";
+              #     version = "v0.12.1";
+              #     src = pkgs.fetchFromGitHub {
+              #       owner = "joelspadin";
+              #       repo = "${name}";
+              #       rev = "${version}";
+              #       sha256 = "sha256-UVxLF4IKRXexz+PbSlypS/1QsWXkS/iYVbgmFCgjvZM=";
+              #     };
+              #     pyproject = true;
+              #     build-system = [ pkgs.python3Packages.setuptools ];
+              #     # metadata?
+              #   };
+              #   # (not in nixpkgs)
+              #   keymap-drawer = pkgs.python3Packages.buildPythonPackage rec {
+              #     name = "keymap-drawer";
+              #     version = "v0.20.0";
+              #     src = pkgs.fetchFromGitHub {
+              #       owner = "caksoylar";
+              #       repo = "${name}";
+              #       rev = "main";
+              #       sha256 = "sha256-bNXx1JwzzJUROBXtR7jxuNFrC6uKFADp0dzJ00s3O7o=";
+              #     };
+              #     pyproject = true;
+              #     build-system = [ pkgs.python3Packages.poetry-core ];
+              #     propagatedBuildInputs =
+              #       with pkgs.python3Packages;
+              #       [
+              #         pcpp
+              #         platformdirs
+              #         pydantic
+              #         pydantic-settings
+              #         pyparsing
+              #         pyyaml
+              #         tree-sitter
+              #       ]
+              #       ++ [ py-tree-sitter-devicetree ];
+              #     meta = {
+              #       homepage = "https://github.com/caksoylar/keymap-drawer";
+              #       description = "Visualize keymaps that use advanced features like hold-taps and combos, with automatic parsing ";
+              #       license = lib.licenses.mit;
+              #     };
+              #   };
+              keymap-drawer = import ./keymap-drawer.nix { inherit pkgs lib; };
             in
-            pkgs.runCommand "layout" { } ''
-              mkdir -p $out
+            pkgs.runCommand "layout"
+              {
+                nativeBuildInputs = [
+                  keymap-drawer
+                  pkgs.inkscape
+                ];
+              }
+              ''
+                mkdir -p $out
 
-              # Pointing to the nix store directly would change the name!
-              # BUT THE FILENAME IS IMPORTANT!
-              ln -s ${./config} config
+                # Pointing to the nix store directly would change the name!
+                # BUT THE FILENAME IS IMPORTANT!
+                ln -s ${./config} config
 
-              # Generate keymap.yaml
-              DRAWER_CONF="$out/keymap-drawer-config.yaml"
-              LAYOUT_SVG="$out/layout.svg"
-              ${keymap-drawer}/bin/keymap parse --columns 10 --zmk-keymap "config/cradio.keymap" > "''${DRAWER_CONF}"
+                # ${keymap-drawer}/bin/keymap
+                # Generate keymap.yaml
+                DRAWER_CONF="$out/keymap-drawer-config.yaml"
+                LAYOUT_SVG="$out/layout.svg"
+                keymap parse --columns 10 --zmk-keymap "config/cradio.keymap" > "''${DRAWER_CONF}"
 
-              # Use it to output SVG
-              ${keymap-drawer}/bin/keymap draw "''${DRAWER_CONF}" > "''${LAYOUT_SVG}"
+                # Use it to output SVG
+                keymap draw "''${DRAWER_CONF}" > "''${LAYOUT_SVG}"
 
-              # inkscape is quite fat... but it works
-              ${pkgs.inkscape}/bin/inkscape "''${LAYOUT_SVG}" --export-filename="$out/layout.pdf"
-              ${pkgs.inkscape}/bin/inkscape "''${LAYOUT_SVG}" --export-filename="$out/layout.png"
-            '';
+                # inkscape is quite fat... but it works
+                inkscape "''${LAYOUT_SVG}" --export-filename="$out/layout.pdf"
+                inkscape "''${LAYOUT_SVG}" --export-filename="$out/layout.png"
+              '';
 
         }
       );

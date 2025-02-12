@@ -28,6 +28,11 @@ layout-img:
 
 # alias -g fullauto="find \$PWD -name '.*' -prune -o -print | entr zsh -c \"git commit -am 'auto' && git push\""
 
+local-layout:
+  firefox "file://{{ justfile_directory() }}/sweep_keymap.ortho.svg"
+  find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'pipx run keymap-drawer parse --columns 10 -z ./config/cradio.keymap > sweep_keymap.yaml && pipx run keymap-drawer draw sweep_keymap.yaml > sweep_keymap.ortho.svg'
+
+
 develop-layout:
   # @just layout-img
   firefox "file://{{ justfile_directory() }}/result/layout.svg"

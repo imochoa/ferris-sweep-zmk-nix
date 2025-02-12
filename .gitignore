@@ -1,6 +1,11 @@
 /.west
+/.direnv
 /modules
 /zephyr
 /zmk
 /build
 /result
+
+*.svg
+*.png
+*.pdf

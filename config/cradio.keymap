@@ -1,6 +1,8 @@
 // Copyright (c) 2022 The ZMK Contributors
 // SPDX-License-Identifier: MIT
 
+// {{{1 Includes & Defs
+
 // Origin: https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/cradio/cradio.keymap
 
 #include <behaviors.dtsi> // https://github.com/zmkfirmware/zmk/blob/main/app/dts/behaviors.dtsi
@@ -13,9 +15,14 @@
 
 // https://peccu.github.io/zmk-cheat-sheet/
 // https://franknoirot.co/posts/ferris-sweep-keyboard-layout
+// https://github.com/benvallack/zmk-config/blob/master/config/cradio.keymap
 //
 // https://zmk.dev/docs/keymaps/list-of-keycodes
+// auto-layer https://github.com/urob/zmk-auto-layer
+// switch out of a layer automatically when pressing an unrelated key (e.g. number layer when not pressing a num)
 
+// Vim hjkl (L,Down,Up,R)
+//
 // Kinesis
 //
 // LEFT
@@ -29,34 +36,66 @@
         // To flash:
         // 2x reset OR Bootloader 
 
-
 // Home row mods macro
 #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT  k2  &ht LCTRL k3  &ht LGUI  k4
 #define HRMR(k1,k2,k3,k4) &ht RGUI  k1  &ht RCTRL k2  &ht RALT  k3  &ht RSHFT k4
 
-#define L_B 0
-#define L_R 1
-#define L_L 2
-#define L_T 3
-#define L_G 4
-// so you can do -> &tog  MOU
+#define BAS 0
+#define SYM 1
+#define LEF 2
+#define TRI 3
+#define NUM 4
+#define NAV 5
+#define GAM 6
+
+// Unicode keys
+// https://askubuntu.com/questions/1171633/i-can-use-alt-x-to-enter-unicode-on-an-old-machine-how-is-this-possible
+
+// #define EURO 20AC
+
+
+//╭────┬────┬────┬────┬────╮   ╭────┬────┬────┬────┬────╮
+//│ 0  │ 1  │ 2  │ 3  │ 4  │   │ 5  │ 6  │ 7  │ 8  │ 9  │
+//├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
+//│ 10 │ 11 │ 12 │ 13 │ 14 │   │ 15 │ 16 │ 17 │ 18 │ 19 │
+//├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
+//│ 20 │ 21 │ 22 │ 23 │ 24 │   │ 25 │ 26 │ 27 │ 28 │ 29 │
+//╰────┴────┴────┼────┼────┤   ├────┼────┼────┴────┴────╯
+//               │ 30 │ 31 │   │ 32 │ 33 │
+//               ╰────┴────╯   ╰────┴────╯
+
+
+// rango keyboard toggle with ctrl-shift-5
+
+// {{{1 TREE
+
+
 
 / {
-
-  // https://zmk.dev/docs/keymaps/combos
+// |  {{{1 Combos
+// https://zmk.dev/docs/keymaps/combos
     combos {
         compatible = "zmk,combos";
-//        combo_esc {
-//            timeout-ms = <50>;
-//            key-positions = <0 1>; // INPUT
-//            layers = <0 1>;
-//            bindings = <&kp ESC>; // OUTPUT
-//        };
-//
+        // Keys
+        combo_esc {
+            timeout-ms = <50>;
+            key-positions = <10 19>; // INPUT
+            layers = < BAS >;
+            bindings = <&kp ESC>; // OUTPUT
+        };
+        combo_windows {
+            timeout-ms = <50>;
+            key-positions = <13 16>;
+            layers = < BAS >;
+            bindings = <&kp LWIN>;
+        };
+
+        // Layers
         gaming_layer_toggle {
             timeout-ms = <50>;
-	          key-positions = <30 31 32 33>;
-            bindings = <&tog L_G>;
+	          key-positions = <0 10 20>;
+            layers=<BAS GAM>;
+            bindings = <&tog GAM>;
         };
 //        combo_caps {
 //            timeout-ms = <30>;
@@ -90,6 +129,7 @@
 //
     };
 
+// |  {{{1 Macros
 // https://zmk.dev/docs/keymaps/behaviors/macros
     macros {
         dodgeslide: dodgeslide {
@@ -103,12 +143,45 @@
                 , <&macro_tap &kp LCTRL>
                 ;
         };
+
+        // // 2 params macro
+        // my_two_param_macro: my_two_param_macro {
+        //     // ...
+        //     compatible = "zmk,behavior-macro-two-param";
+        //     #binding-cells = <2>; // Must be 2
+        //     bindings = /* ... */;
+        // };
+
+        // euro macro
+        // 2 params macro
+        euro_macro: euro_macro {
+            label = "euro macro";
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>; // Must be 2
+            bindings
+                    = <&macro_press   &kp LCTRL>
+                    , <&macro_press   &kp LSHFT>
+                    , <&macro_tap     &kp U &kp N2 &kp N0 &kp A &kp C &kp ENTER >
+                    , <&macro_release &kp LCTRL>
+                    , <&macro_release &kp LSHFT>
+                    ;
+        };
     };
   
-
-
-   // https://zmk.dev/docs/keymaps/behaviors#key-press-behaviors
+// |  {{{1 Behaviors
+// https://zmk.dev/docs/keymaps/behaviors#key-press-behaviors
+// https://zmk.dev/docs/keymaps/behaviors#user-defined-behaviors
     behaviors {
+        // [if HELD] if PRESSED {TAPPED}
+        // key press &kp KEY
+        // tap dance &td0 KEY1 KEY2 KEY3
+        // mod-tap &mt [MODIFIER] KEY
+        // layer-tap &lt [LAYER] KEY
+        // momentary layer &mo [LAYER]
+        // to layer &to LAYER
+        // toggle layer &tog LAYER
+        // sticky key &sk MODIFIER
+        // sticky layer &sl LAYER
         ht: hold_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -118,102 +191,108 @@
             require-prior-idle-ms = <100>;
             bindings = <&kp>, <&kp>;
         };
-    // https://zmk.dev/docs/keymaps/behaviors#user-defined-behaviors
         td0: tap_dance_0 {
             compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
+            label = "TAPDANCE";
+            #binding-cells = <0>; // No inputs
             tapping-term-ms = <200>;
-            bindings = <&kp N1>, <&kp N2>, <&kp N3>;
+            bindings = <&kp N1>, <&kp N2>, <&kp N3>; // outputs
         };
-    //
+        td_currency: td_currency {
+            compatible = "zmk,behavior-tap-dance";
+            label = "TAPDANCE Currency";
+            #binding-cells = <0>;
+            tapping-term-ms = <150>;
+            // quick-tap-ms = <0>;
+            // flavor="tap-preferred";
+            bindings = <&kp DOLLAR>, <&euro_macro>;
+        };
     };
 
+// |  {{{1 conditional-layers
     conditional_layers {
         compatible = "zmk,conditional-layers";
-        tri_layer {
-            if-layers = <L_R L_L>;
-            then-layer = <L_T>;
-        };
+//        tri_layer {
+//            if-layers = <SYM LEF>;
+//            then-layer = <TRI>;
+//        };
     };
 
+// |  {{{1 Keymap
     keymap {
         compatible = "zmk,keymap";
-        // LAYER 0
+        // {{{1 LAYER 0 -> BASE
         default_layer { 
             display-name = "Base";
             bindings = <
-        //╭──────────┬──────────┬──────────┬────────────┬──────────╮   ╭──────────┬────────────┬──────────┬──────────┬──────────╮
-        //│  Q       │  W       │  E       │  R         │  T       │   │  Y       │    U       │  I       │  O       │  P       │
-            &kp Q      &kp W      &kp E      &kp R        &kp T          &kp Y        &kp U      &kp I      &kp O      &kp P
-        //├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
-        //│  A       │  S       │  D       │  F         │  G       │   │  H       │    J       │  K       │  L       │ ' "      │
-            HRML(A,        S,         D,         F)       &kp G          &kp H        HRMR(J,        K,         L,        SQT)
-        //├──────────┼──────────┼──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┼──────────┼──────────┤
-        //│  Z       │  X       │  C       │  V         │  B       │   │  N       │    M       │ , <      │ . >      │ / ?      │
-            &kp Z      &kp X      &kp C      &kp V        &kp B          &kp N        &kp M      &kp COMMA  &kp DOT    &kp FSLH
-        //╰──────────┴──────────┴──────────┼────────────┼──────────┤   ├──────────┼────────────┼──────────┴──────────┴──────────╯
-                                            &lt L_L BSPC    &kp TAB       &kp ENTER  &lt L_R SPACE
-        //                                 ╰────────────┴──────────╯   ╰──────────┴────────────╯
+            &kp Q   &kp W   &kp E  &kp R         &kp T         &kp Y        &kp U      &kp I      &kp O      &kp P
+            HRML(A,     S,      D,     F)        &kp G         &kp H        HRMR(J,        K,         L,        SQT)
+            &kp Z   &kp X   &kp C  &kp V         &kp B         &kp N        &kp M      &mt SEMI COMMA  &mt COLON DOT  &mt BSLH FSLH
+                                   &trans        &kp BSPC      &kp SPACE    &to SYM
             >;
         };
 
-        // LAYER 1
-        right_layer {
-            display-name = "Right Layer";
+        // {{{1 LAYER 1 -> SYMBOL
+        symbols_layer {
+            display-name = "Symbols";
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ INSERT   │  1       │  2       │  3       │          │   │ HOME     │ PAGE DN  │ PAGE UP  │ END      │  :       │
-            &kp INS    &kp N1     &kp N2     &kp N3     &trans         &kp HOME   &kp PG_DN  &kp PG_UP  &kp END    &kp COLON
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ DELETE   │  4       │  5       │  6       │          │   │ LEFT     │ DOWN     │ UP       │ RIGHT    │  ;       │
-            &kp DEL    &kp N4     &kp N5     &kp N6     &trans         &kp LEFT   &kp DOWN   &kp UP   &kp RIGHT   &kp SEMI
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ CAPS     │  7       │  8       │  9       │  0       │   │          │          │          │          │          │
-           &caps_word  &kp N7     &kp N8     &kp N9     &kp N0         &trans     &trans     &trans     &trans     &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                             &trans     &kp ESC        &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
+            &kp EXCL   &kp AT     &kp HASH   &kp DOLLAR  &kp PRCNT      &kp CARET   &kp AMPS  &kp STAR  &kp COLON &kp BSPC
+            // &kp ESC   &kp AT     &kp SEMI   &kp COLON  &kp TILDE      &kp APOS   &kp LBKT  &kp RBKT  &kp LT    &kp GT
+            &kp TAB   &kp QMARK  &kp COMMA  &kp DOT    &euro_macro       &kp DQT    &kp LPAR  &kp RPAR  &kp COLON    &kp ENTER
+            &kp BSLH  &kp PIPE   &kp FSLH   &kp AMPS   &kp HASH        &kp GRAVE  &kp LBRC  &kp RBRC  &kp SEMI    &to NAV
+                                            &to BAS    &kp ESC        &kp RALT   &to NUM
             >;
         };
 
-        // LAYER 2
+        // {{{1 LAYER 2
         left_layer {
             display-name = "Left Layer";
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │  [       │  {       │  }       │          │   │  ^       │  (       │  )       │  ]       │  ~       │
             &trans     &kp LBKT   &kp LBRC   &kp RBRC   &trans         &kp CARET  &kp LPAR   &kp RPAR   &kp RBKT   &kp TILDE
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│  !       │  @       │  #       │  $       │  %       │   │  *       │  -       │  =       │  \       │  `       │
             &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT      &kp ASTRK  &kp MINUS  &kp EQUAL  &kp BSLH   &kp GRAVE
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │          │          │   │  &       │  _       │  +       │  │       │          │
             &trans     &trans     &trans     &trans     &trans         &kp AMPS   &kp UNDER  &kp PLUS   &kp PIPE   &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
-        // LAYER 3
+        // {{{1 LAYER 3
         tri_layer {
             display-name = "Tri";
             bindings = <
-        //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ RESET    │          │          │          │PROFILE 0 │   │          │          │          │          │  RESET   │
-           &sys_reset  &trans     &trans     &trans    &bt BT_SEL 0    &trans     &trans     &trans     &trans    &sys_reset
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│BOOTLOADER│          │          │          │PROFILE 1 │   │          │          │          │          │BOOTLOADER│
-          &bootloader  &trans     &trans     &trans    &bt BT_SEL 1    &trans     &trans     &trans  &studio_unlock  &bootloader
-        //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │ CLEAR BT │PROFILE 2 │   │          │          │          │          │          │
-            &trans     &trans     &trans    &bt BT_CLR &bt BT_SEL 2    &trans     &trans     &trans     &trans     &trans
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+            &sys_reset  &trans     &trans     &trans    &bt BT_SEL 0    &trans     &trans     &trans     &trans    &sys_reset
+            &bootloader  &trans     &trans     &trans    &bt BT_SEL 1    &trans     &trans     &trans  &studio_unlock  &bootloader
+            &trans     &trans     &trans    &bt BT_CLR   &bt BT_SEL 2    &trans     &trans     &trans     &trans     &trans
                                              &trans     &trans         &trans     &trans
-        //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
-        // LAYER 4
+
+        // {{{1 LAYER 4
+        num_layer {
+            display-name = "Numbers";
+            bindings = <
+        		&trans   &trans    &trans &trans   &trans 	         	&kp MINUS &kp N7 &kp N8 &kp N9 &kp BKSP
+        		&trans   &trans    &trans &trans   &trans  	         	&kp EQUAL &kp N4 &kp N5 &kp N6 &kp ENTER 
+        		&trans   &trans    &trans &trans   &trans   	         	&kp N0    &kp N1 &kp N2 &kp N3 &to NAV
+        					    &to BAS             &trans  		         	&sk RALT  &to SYM
+		        >;
+        };
+
+        // {{{1 LAYER 5
+        nav_layer {
+            display-name = "Nav";
+            bindings = <
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+                &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
+                                    &trans &trans &trans &trans
+
+        		// &trans  &mwh SCROLL_LEFT    &mmv MOVE_UP    &mwh SCROLL_RIGHT    &kp NUM_5 			&kp LG(LBKT)   &kp LC(LS(TAB))   &kp RC(TAB) &kp LG(RBKT) &trans
+        		// &kp F1 &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &kp DEL  						&kp LEFT &kp DOWN  &kp UP &kp RIGHT &kp ENTER 
+        		// &td LG(GRAVE) GRAVE &mkp RCLK  &mwh SCROLL_UP &mwh SCROLL_DOWN &trans   				&mkp LCLK &kp PG_DN  &kp K_VOL_DN  &trans &trans   
+        		// 			 &to 0 &trans  					&sk RALT &to 1 
+		        >;
+        };
+        // {{{1 LAYER 6
         gaming_layer {
             display-name = "Gaming";
             bindings = < 
@@ -223,22 +302,15 @@
                                     &dodgeslide &kp SPACE    &trans &trans
             >; // &mkp MB3 // mouse button 3
         };
+    };
+};
+
+// {{{1 Reference
 
 // &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
 // &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
 // &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
 //                      &trans &trans &trans &trans
-
-//╭────┬──────┬──────┬─────┬──────╮   ╭─────┬─────┬──────┬──────┬──────╮
-//│ 0  │  1   │  2   │  3  │  4   │   │  5  │ 6   │  7   │  8   │  9   │
-//├────┼──────┼──────┼─────┼──────┤   ├─────┼─────┼──────┼──────┼──────┤
-//│ 10 │  11  │  12  │  13 │  14  │   │  15 │ 16  │  17  │  18  │  19  │
-//├────┼──────┼──────┼─────┼──────┤   ├─────┼─────┼──────┼──────┼──────┤
-//│ 20 │  21  │  22  │  23 │  24  │   │  25 │ 26  │  27  │  28  │  29  │
-//╰────┴──────┴──────┼─────┼──────┤   ├─────┼─────┼──────┴──────┴──────╯
-//                   │  30 │  31  │   │  32 │ 33  │
-//                   ╰─────┴──────╯   ╰─────┴─────╯
-
 
 //╭──────────┬──────────┬──────────┬────────────┬──────────╮   ╭──────────┬────────────┬──────────┬──────────┬──────────╮
 //│  Q       │  W       │  E       │  R         │  T       │   │  Y       │    U       │  I       │  O       │  P       │
@@ -250,5 +322,4 @@
 //                                 ╰────────────┴──────────╯   ╰──────────┴────────────╯
 
 
-    };
-};
+// vim:fdm=marker:fen:fdl=0:

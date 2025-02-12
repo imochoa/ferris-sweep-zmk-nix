@@ -30,6 +30,9 @@ layout-img:
 
 develop-layout:
   # @just layout-img
+  firefox "file://{{ justfile_directory() }}/result/layout.svg"
   # fd -epdf . result/ | head -n1 | xargs xdg-open
-  find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage && fd -epdf . result/ | head -n1 | xargs xdg-open'
+  # TODO: send command to refresh firefox??
+  find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage'
+  # find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage && fd -epdf . result/ | head -n1 | xargs xdg-open'
   # \ls "config/" | entr -d nix build .#layoutImage

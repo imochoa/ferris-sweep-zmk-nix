@@ -221,9 +221,9 @@
             display-name = "Base";
             bindings = <
             &kp Q   &kp W   &kp E        &kp R         &kp T             &kp Y        &kp U      &kp I      &kp O      &kp P
-            &kp A   &kp S   &ht LALT D  &ht LGUI  F   &kp G             &kp H        &ht RGUI  J  &ht RALT K       &kp  L       &kp SQT
-            &kp Z   &kp X   &kp C        &kp V         &kp B             &kp N        &kp M      &mt SEMI COMMA  &mt COLON DOT  &mt BSLH FSLH
-                                         &kp SPACE     &sk LSHFT         &sk RCTRL    &to SYM 
+            &ht LSHIFT  A   &ht LALT S   &ht LCTRL D  &ht LGUI  F        &kp G          &kp H   &ht RGUI  J  &ht RCTRL K   &ht RALT  L   &ht RSHIFT SEMI
+            &kp Z   &kp X   &kp C        &kp V         &kp B             &kp N        &kp M      &kp COMMA &kp DOT  &mt BSLH FSLH
+                                         &to SYM       &sk RCTRL       &sk RSHIFT   &kp SPACE   
             >;
         };
 
@@ -231,10 +231,10 @@
         symbols_layer {
             display-name = "Symbols";
             bindings = <
-            &kp EXCL          &kp AT          &kp HASH      &kp DOLLAR      &kp PRCNT      &kp CARET &kp AMPS       &kp STAR       &mt SEMI COLON &kp BKSP
-            &kp TAB           &kp EQUAL       &ht LALT LBKT &ht LGUI  RBKT  &kp PIPE       &kp FSLH  &ht RGUI LPAR  &ht RALT RPAR  &kp DQT        &kp ENTER
-            &mt GRAVE TILDE  &mt UNDER MINUS  &kp LBRC      &kp RBRC        &kp PLUS       &kp BSLH  &kp LT         &kp GT         &kp QMARK      &trans
-                                                            &to BAS         &sk LSHFT      &sk RCTRL  &to NUM
+            &kp ESC        &kp AT          &kp HASH        &kp DOLLAR      &kp PRCNT      &kp CARET &kp AMPS       &kp STAR       &mt UNDER MINUS &kp BKSP
+            &ht LSHIFT TAB  &ht LALT GRAVE  &ht LCTRL LBKT  &ht LGUI  RBKT  &kp EQUAL       &kp BSLH  &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT SQT         &ht RSHIFT  ENTER
+            &none          &kp EXCL            &none          &none        &none              &none    &none         &none         &kp QMARK      &kp DEL
+                                                           &to NUM       &sk RCTRL         &sk RSHIFT   &to BAS   
             >;
         }; 
 
@@ -242,10 +242,10 @@
         num_layer {
             display-name = "Numbers";
             bindings = <
-        		&trans   &trans    &trans        &trans         &trans 	         	&kp MINUS  &kp N7       &kp N8      &kp N9    &kp BKSP
-        		&kp TAB  &kp EQUAL &ht LALT LBKT &ht LGUI  RBKT  &kp PIPE   	    &kp EQUAL  &ht RGUI N4  &ht RALT N5 &kp N6    &kp ENTER
-        		&trans   &trans    &trans        &trans         &trans   	        &kp N0     &kp N1       &kp N2       &kp N3   &trans
-                                                  &to BAS       &sk LSHFT           &sk RCTRL  &to SYM
+        		&none   &none    &none        &none         &none 	         	&kp MINUS  &kp N7       &kp N8      &kp N9    &kp BKSP
+        		&ht LSHIFT  TAB  &ht LALT EQUAL &ht LCTRL LBKT &ht LGUI  RBKT  &kp PIPE   	    &kp EQUAL  &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
+        		&none   &none    &none        &none         &none   	        &kp N0     &kp N1       &kp N2       &kp N3   &none
+                                         &to SYM       &sk RCTRL       &sk RSHIFT   &to BAS   
 		        >;
         };
         // left_layer {

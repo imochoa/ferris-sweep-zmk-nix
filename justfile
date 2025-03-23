@@ -25,6 +25,9 @@ build-firmware:
 # \ls ./flake.nix |  entr -d -c just layout-img
 layout-img:
   nix build .#layoutImage
+  rm -rf ./imgs
+  mkdir -p ./imgs
+  cp result/* imgs/
 
 # alias -g fullauto="find \$PWD -name '.*' -prune -o -print | entr zsh -c \"git commit -am 'auto' && git push\""
 

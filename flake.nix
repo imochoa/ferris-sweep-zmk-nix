@@ -52,7 +52,7 @@
               ".yml"
               "_defconfig"
             ];
-            zephyrDepsHash = "sha256-k0BrCX7Pspj6/SSOgKSlDW1jZ3OWTFy5f8Kr+vQJ1LU=";
+            zephyrDepsHash = "";
             meta = {
               description = "ZMK firmware";
               license = nixpkgs.lib.licenses.mit;

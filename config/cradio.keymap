@@ -64,10 +64,19 @@
         //     bindings = <&kp ESC>; // OUTPUT
         // };
         combo_windows {
+            // Windows key was missing!
             key-positions = <13 16>;
             timeout-ms = <50>;
             // layers = < BAS SYM >;
             bindings = <&kp LWIN>;
+        };
+        combo_esc {
+            // Wanted a way to avoid 2 layer switches while pressing escape in vim
+            // emulates C-[
+            key-positions = <20 9>;
+            timeout-ms = <50>;
+            // layers = < BAS SYM >;
+            bindings = <&kp ESC>;
         };
 
         // Layers
@@ -208,10 +217,21 @@
         // toggle layer &tog LAYER
         // sticky key &sk MODIFIER
         // sticky layer &sl LAYER
+        // Original ht
+        // ht: hold_tap {
+        //     compatible = "zmk,behavior-hold-tap";
+        //     #binding-cells = <2>;
+        //     flavor = "tap-preferred";
+        //     tapping-term-ms = <220>;
+        //     quick-tap-ms = <150>;
+        //     require-prior-idle-ms = <100>;
+        //     bindings = <&kp>, <&kp>;
+        // };
         ht: hold_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
-            flavor = "tap-preferred";
+            // flavor = "tap-preferred";
+            flavor = "balanced";
             tapping-term-ms = <220>;
             quick-tap-ms = <150>;
             require-prior-idle-ms = <100>;
@@ -255,10 +275,10 @@
         default_layer { 
             display-name = "Base";
             bindings = <
-            &kp Q           &kp W        &kp E        &kp R         &kp T       &kp Y   &kp U        &kp I        &kp O       &kp P
-            &ht LSHIFT  A   &ht LALT S   &ht LCTRL D  &ht LGUI  F   &kp G       &kp H   &ht RGUI  J  &ht RCTRL K  &ht RALT  L &ht RSHIFT SEMI
-            &kp Z           &kp X        &kp C        &kp V         &kp B       &kp N   &kp M        &kp COMMA    &kp DOT     &kp FSLH
-                                         &to SYM     &none          &none   &kp SPACE
+            &kp Q           &kp W        &kp E        &kp R         /* | */    &kp T       &kp Y   &kp U        &kp I        &kp O       &kp P
+            &ht LSHIFT  A   &ht LALT S   &ht LCTRL D  &ht LGUI  F   /* | */    &kp G       &kp H   &ht RGUI  J  &ht RCTRL K  &ht RALT  L &ht RSHIFT SEMI
+            &kp Z           &kp X        &kp C        &kp V         /* | */    &kp B       &kp N   &kp M        &kp COMMA    &kp DOT     &kp FSLH
+                                         &to SYM     &none          /* | */    &none   &kp SPACE
  
             >;
         };
@@ -268,21 +288,20 @@
         symbols_layer {
             display-name = "Symbols";
             bindings = <
-            &kp ESC           &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT          &kp CARET &kp AMPS       &kp STAR        &mt UNDER MINUS     &kp BKSP
-            &ht LSHIFT  TAB   &ht LALT GRAVE  &ht LCTRL SQT  &ht LGUI  DQT   &none              &none     &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT BSLH       &ht RSHIFT ENTER
-            &none             &kp EXCL        &kp EQUAL      &none           &none              &none     &kp LBKT       &kp RBKT        &none               &none
-                                                             &to NUM         &none              &none    &to BAS
+            &kp ESC           &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR        &mt UNDER MINUS     &kp BKSP
+            &ht LSHIFT  TAB   &ht LALT GRAVE  &ht LCTRL SQT  &ht LGUI AT     &none       /* | */    &none     &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT BSLH       &ht RSHIFT ENTER
+            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &kp EQUAL   /* | */    &none     &kp DOWN       &kp UP          &kp LBKT            &kp RBKT 
+                                                             &to NUM         &none       /* | */    &none     &to BAS
             >;
-        }; 
-
+        };
         // {{{1 LAYER 2 -> NUM
         num_layer {
             display-name = "Numbers";
             bindings = <
-        		&kp ESC         &none          &kp UP         &none         &none 	         &kp MINUS    &kp N7       &kp N8       &kp N9          &kp BKSP
-        		&ht LSHIFT TAB  &ht LALT GRAVE &ht LCTRL SQT  &ht LGUI  DQT &kp EQUAL        &none        &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
-        		&none           &none          &none          &none         &none            &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
-                                                          &to SYM       &none            &none        &to BAS
+        	  &kp ESC         &none          &kp UP         &none         &none       /* | */    &kp MINUS    &kp N7       &kp N8       &kp N9          &kp BKSP
+        	  &ht LSHIFT TAB  &ht LALT GRAVE &ht LCTRL SQT  &ht LGUI  DQT &kp EQUAL   /* | */    &none        &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
+        	  &none           &none          &none          &none         &none       /* | */    &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
+                                                          &to SYM       &none       /* | */    &none        &to BAS
 		        >;
         };
         // TODO: fn layer?
@@ -291,22 +310,23 @@
          nav_layer {
              display-name = "Nav";
              bindings = <
-               &none &none    &kp UP    &none     &none        &none    &none    &none    &none     &kp BKSP
-               &none &kp LEFT &kp DOWN  &kp RIGHT &none        &kp LEFT &kp DOWN &kp UP   &kp RIGHT &kp ENTER
-               &none &none    &kp LEFT  &kp RIGHT &none        &none    &kp UP   &kp DOWN &none     &none
-                                        &to SYM   &none        &none    &to BAS
+               &none &none    &kp UP    &none     &none   /* | */    &none    &none    &none    &none     &kp BKSP
+               &none &kp LEFT &kp DOWN  &kp RIGHT &none   /* | */    &kp LEFT &kp DOWN &kp UP   &kp RIGHT &kp ENTER
+               &none &none    &kp LEFT  &kp RIGHT &none   /* | */    &none    &kp UP   &kp DOWN &none     &none
+                                        &to SYM   &none   /* | */    &none    &to BAS
              >;
          };
          // TODO: get the navigation commands from ben
         
         // {{{1 LAYER 4
         sys_layer {
+          // Don't need &sys_reset, right?
             display-name = "System";
             bindings = <
-            &studio_unlock &sys_reset    &bootloader  &bt BT_CLR     &none              &none       &bt BT_CLR   &bootloader   &sys_reset    &studio_unlock 
-            &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0   &none              &none       &bt BT_SEL 0 &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3 
-            &none          &none         &none        &none          &none              &none       &none        &none         &none         &none
-                                                      &none          &none              &none       &to BAS 
+            &studio_unlock &bootloader   &none        &none          &none   /* | */    &none       &none        &none         &bootloader   &studio_unlock 
+            &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0   &none   /* | */    &none       &bt BT_SEL 0 &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3 
+            &bt BT_CLR     &none         &none        &none          &none   /* | */    &none       &none        &none         &none         &bt BT_CLR  
+                                                      &none          &none   /* | */    &none       &to BAS 
             >;
         };
 

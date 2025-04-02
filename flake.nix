@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     zmk-nix = {
-      url = "github:lilyinstarlight/zmk-nix";
+      url = "github:lilyinstarlight/zmk-nix/8929f75cd9180733e95a75878eb82f51c6d30363";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -52,7 +52,7 @@
               ".yml"
               "_defconfig"
             ];
-            zephyrDepsHash = "sha256-k0BrCX7Pspj6/SSOgKSlDW1jZ3OWTFy5f8Kr+vQJ1LU=";
+            zephyrDepsHash = "sha256-1nMZWSEmDuUWoYvsUE4eV5fBAD6kNFw0ZHF3jDKwpLg=";
             meta = {
               description = "ZMK firmware";
               license = nixpkgs.lib.licenses.mit;

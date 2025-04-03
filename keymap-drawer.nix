@@ -11,7 +11,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "joelspadin";
       repo = "${name}";
-      rev = "${version}";
+      # rev = "${version}";
+      rev = "6557729f4afaf01dec7481d4e5975515ea8f0edd";
       sha256 = "sha256-ua+mk++93ooH5nQH/M4vj7VSSvVDis/Uh8S1H34TxKs=";
     };
     pyproject = true;
@@ -25,8 +26,9 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "caksoylar";
       repo = "${name}";
-      rev = "main";
-      sha256 = "sha256-LySpE9HFs2LnYgH/sOK1KOgkLuXTQyo0fEbir2mgxyI=";
+      # rev = "main";
+      rev = "a4650e742e0e68a60f668b5086fa64ecaf36a039";
+      sha256 = "sha256-LJQbK+5veY3rhSsEWsxEqoegaiMMKuMgH9QBT9WGiU8=";
     };
     pyproject = true;
     build-system = [ pkgs.python3Packages.poetry-core ];

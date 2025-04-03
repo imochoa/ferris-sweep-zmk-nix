@@ -88,77 +88,77 @@
         // };
         combo_to_sys_layer {
             timeout-ms = <50>;
-	        key-positions = <4 14 24>;
+            key-positions = <4 14 24>;
             layers=<BAS SYS>;
             bindings = <&to SYS>;
         };
         lcombo_to_sys {
             timeout-ms = <50>;
-	          key-positions = <4 14 24>;
+              key-positions = <4 14 24>;
             bindings = <&to SYS>;
         };
         rcombo_to_sys {
             timeout-ms = <50>;
-	          key-positions = <5 15 25>;
+              key-positions = <5 15 25>;
             bindings = <&to SYS>;
         };
         
         // combo_to_base_layer {
         //     timeout-ms = <50>;
-	    //     key-positions = <31 32>;
+        //     key-positions = <31 32>;
         //     layers=<SYM NUM SYS>;
         //     bindings = <&to BAS>;
         // };
         // rcombo_to_base {
         //     timeout-ms = <50>;
-	      //     key-positions = <32 6>;
+          //     key-positions = <32 6>;
         //     bindings = <&to BAS>;
         // };
         // lcombo_to_base {
         //     timeout-ms = <50>;
-	      //     key-positions = <31 3>;
+          //     key-positions = <31 3>;
         //     bindings = <&to BAS>;
         // };
         // rcombo_to_sym {
         //     timeout-ms = <50>;
-	      //     key-positions = <32 7>;
+          //     key-positions = <32 7>;
         //     bindings = <&to SYM>;
         // };
         // lcombo_to_sym {
         //     timeout-ms = <50>;
-	      //     key-positions = <31 2>;
+          //     key-positions = <31 2>;
         //     bindings = <&to SYM>;
         // };
         // rcombo_to_num {
         //     timeout-ms = <50>;
-	      //     key-positions = <32 8>;
+          //     key-positions = <32 8>;
         //     bindings = <&to NUM>;
         // };
         // lcombo_to_num {
         //     timeout-ms = <50>;
-	      //     key-positions = <31 1>;
+          //     key-positions = <31 1>;
         //     bindings = <&to NUM>;
         // };
         // rcombo_to_nav {
         //     timeout-ms = <50>;
-	      //     key-positions = <32 9>;
+          //     key-positions = <32 9>;
         //     bindings = <&to NAV>;
         // };
         // lcombo_to_nav {
         //     timeout-ms = <50>;
-	      //     key-positions = <31 0>;
+          //     key-positions = <31 0>;
         //     bindings = <&to NAV>;
         // };
         //
         // combo_to_sym_layer {
         //     timeout-ms = <50>;
-	    //     key-positions = <31 33>;
+        //     key-positions = <31 33>;
         //     layers = <BAS NUM>;
         //     bindings = <&to SYM>;
         // };
         // combo_to_num_layer {
         //     timeout-ms = <50>;
-	    //     key-positions = <30 32>;
+        //     key-positions = <30 32>;
         //     layers = <BAS SYM>;
         //     bindings = <&to NUM>;
         // };
@@ -275,10 +275,10 @@
         default_layer { 
             display-name = "Base";
             bindings = <
-            &kp Q           &kp W        &kp E        &kp R         /* | */    &kp T       &kp Y   &kp U        &kp I        &kp O       &kp P
-            &ht LSHIFT  A   &ht LALT S   &ht LCTRL D  &ht LGUI  F   /* | */    &kp G       &kp H   &ht RGUI  J  &ht RCTRL K  &ht RALT  L &ht RSHIFT SEMI
-            &kp Z           &kp X        &kp C        &kp V         /* | */    &kp B       &kp N   &kp M        &kp COMMA    &kp DOT     &kp FSLH
-                                         &to SYM     &none          /* | */    &none   &kp SPACE
+            &kp Q           &kp W        &kp E        &kp R         /* | */    &kp T       &kp Y      &kp U        &kp I        &kp O       &kp P
+            &ht LSHIFT  A   &ht LALT S   &ht LCTRL D  &ht LGUI  F   /* | */    &kp G       &kp H      &ht RGUI  J  &ht RCTRL K  &ht RALT  L &ht RSHIFT SEMI
+            &kp Z           &kp X        &kp C        &kp V         /* | */    &kp B       &kp N      &kp M        &kp COMMA    &kp DOT     &kp FSLH
+                                         &to SYM     &none          /* | */    &none       &kp SPACE
  
             >;
         };
@@ -289,8 +289,8 @@
             display-name = "Symbols";
             bindings = <
             &kp ESC           &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR        &mt UNDER MINUS     &kp BKSP
-            &ht LSHIFT  TAB   &ht LALT GRAVE  &ht LCTRL SQT  &ht LGUI AT     &none       /* | */    &none     &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT BSLH       &ht RSHIFT ENTER
-            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &kp EQUAL   /* | */    &none     &kp DOWN       &kp UP          &kp LBKT            &kp RBKT 
+            &ht LSHIFT  TAB   &ht LALT GRAVE  &ht LCTRL SQT  &ht LGUI EQUAL  &none       /* | */    &none     &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT BSLH       &ht RSHIFT ENTER
+            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp DOWN       &kp UP          &kp LBKT            &kp RBKT 
                                                              &to NUM         &none       /* | */    &none     &to BAS
             >;
         };
@@ -298,11 +298,11 @@
         num_layer {
             display-name = "Numbers";
             bindings = <
-        	  &kp ESC         &none          &kp UP         &none         &none       /* | */    &kp MINUS    &kp N7       &kp N8       &kp N9          &kp BKSP
-        	  &ht LSHIFT TAB  &ht LALT GRAVE &ht LCTRL SQT  &ht LGUI  DQT &kp EQUAL   /* | */    &none        &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
-        	  &none           &none          &none          &none         &none       /* | */    &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
-                                                          &to SYM       &none       /* | */    &none        &to BAS
-		        >;
+              &kp ESC         &none          &none           &none          &none      /* | */   &kp MINUS    &kp N7       &kp N8       &kp N9          &kp BKSP
+              &ht LSHIFT TAB  &ht LALT HASH  &ht LCTRL HASH  &ht LGUI HASH  &kp EQUAL  /* | */   &none        &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
+              &none           &none          &none           &none          &none      /* | */   &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
+                                                             &to SYM        &none      /* | */   &none        &to BAS
+              >;
         };
         // TODO: fn layer?
 
@@ -310,10 +310,10 @@
          nav_layer {
              display-name = "Nav";
              bindings = <
-               &none &none    &kp UP    &none     &none   /* | */    &none    &none    &none    &none     &kp BKSP
-               &none &kp LEFT &kp DOWN  &kp RIGHT &none   /* | */    &kp LEFT &kp DOWN &kp UP   &kp RIGHT &kp ENTER
-               &none &none    &kp LEFT  &kp RIGHT &none   /* | */    &none    &kp UP   &kp DOWN &none     &none
-                                        &to SYM   &none   /* | */    &none    &to BAS
+               &none        &kp Q    &none    &kp E        &kp R   /* | */    &none       &none      &none       &none        &kp BKSP
+               &kp LSHIFT   &kp A    &kp W    &kp D        &kp G   /* | */    &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT    &kp ENTER
+               &kp LCTRL    &none    &kp S    &none        &none   /* | */    &none       &kp UP     &kp DOWN    &none        &none
+                                              &kp SPACE    &none   /* | */    &none       &to BAS
              >;
          };
          // TODO: get the navigation commands from ben
@@ -323,10 +323,10 @@
           // Don't need &sys_reset, right?
             display-name = "System";
             bindings = <
-            &studio_unlock &bootloader   &none        &none          &none   /* | */    &none       &none        &none         &bootloader   &studio_unlock 
-            &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0   &none   /* | */    &none       &bt BT_SEL 0 &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3 
-            &bt BT_CLR     &none         &none        &none          &none   /* | */    &none       &none        &none         &none         &bt BT_CLR  
-                                                      &none          &none   /* | */    &none       &to BAS 
+            &studio_unlock &bootloader   &none        &none         &none   /* | */    &none   &none         &none         &bootloader   &studio_unlock 
+            &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0  &none   /* | */    &none   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
+            &bt BT_CLR     &none         &none        &none         &none   /* | */    &none   &none         &none         &none         &bt BT_CLR
+                                                      &none         &none   /* | */    &none   &to BAS 
             >;
         };
 

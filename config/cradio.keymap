@@ -295,12 +295,13 @@
             >;
         };
         // {{{1 LAYER 2 -> NUM
+        // F1 - F24
         num_layer {
             display-name = "Numbers";
             bindings = <
               &kp ESC         &none          &none           &none          &none      /* | */   &kp MINUS    &kp N7       &kp N8       &kp N9          &kp BKSP
               &ht LSHIFT TAB  &ht LALT HASH  &ht LCTRL HASH  &ht LGUI HASH  &kp EQUAL  /* | */   &none        &ht RGUI N4  &ht RCTRL N5 &ht RALT  N6    &ht RSHIFT ENTER
-              &none           &none          &none           &none          &none      /* | */   &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
+              &none           &none          &none           &none          &to NAV    /* | */   &kp N0       &kp N1       &kp N2       &kp N3          &kp N0
                                                              &to SYM        &none      /* | */   &none        &to BAS
               >;
         };
@@ -310,10 +311,10 @@
          nav_layer {
              display-name = "Nav";
              bindings = <
-               &none        &kp Q    &none    &kp E        &kp R   /* | */    &none       &none      &none       &none        &kp BKSP
-               &kp LSHIFT   &kp A    &kp W    &kp D        &kp G   /* | */    &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT    &kp ENTER
-               &kp LCTRL    &none    &kp S    &none        &none   /* | */    &none       &kp UP     &kp DOWN    &none        &none
-                                              &kp SPACE    &none   /* | */    &none       &to BAS
+               &kp N1       &kp N2  &kp N3  &kp N4      &kp N5  /* | */    &none       &none      &none       &none        &kp BKSP
+               &kp LSHIFT   &kp Q   &kp W   &kp E       &kp R   /* | */    &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT    &kp ENTER
+               &kp LCTRL    &kp A   &kp S   &kp D       &kp G   /* | */    &none       &kp UP     &kp DOWN    &none        &none
+                                            &kp SPACE   &none   /* | */    &none       &to BAS
              >;
          };
          // TODO: get the navigation commands from ben

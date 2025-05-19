@@ -13,6 +13,8 @@
 // Enable Mouse
 #include <dt-bindings/zmk/pointing.h>
 
+// https://github.com/urob/zmk-helpers/raw/main/docs/img/key_labels_example.png
+
 // https://peccu.github.io/zmk-cheat-sheet/
 // https://franknoirot.co/posts/ferris-sweep-keyboard-layout
 // https://github.com/benvallack/zmk-config/blob/master/config/cradio.keymap
@@ -294,6 +296,7 @@
                                                              &to NUM         &none       /* | */    &none     &to BAS
             >;
         };
+        // should be down up to match jk
         // {{{1 LAYER 2 -> NUM
         // F1 - F24
         num_layer {

@@ -1,6 +1,10 @@
 https://github.com/zmkfirmware/zmk/blob/main/app/boards/shields/cradio/README.md
 
-Check out: https://github.com/urob/zmk-config/tree/main/draw
+
+# Research
+- https://github.com/urob/zmk-helpers
+- https://github.com/urob/zmk-config
+- https://gist.github.com/urob/68a1e206b2356a01b876ed02d3f542c7
 
 # How to rename
 

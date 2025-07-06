@@ -1,0 +1,6 @@
+{
+    "editor.formatOnSave": true,
+    "[dts]": {
+        "editor.formatOnSave": false
+    }
+}

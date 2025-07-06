@@ -13,6 +13,8 @@
 // Enable Mouse
 #include <dt-bindings/zmk/pointing.h>
 
+#include "./34.h"
+
 // https://github.com/urob/zmk-helpers/raw/main/docs/img/key_labels_example.png
 
 // https://peccu.github.io/zmk-cheat-sheet/

@@ -51,6 +51,8 @@
               ".shield"
               ".yml"
               "_defconfig"
+              # My additions
+              ".h"
             ];
             zephyrDepsHash = "sha256-FzDnh6e0u+Zy1JYW7exQrP1I8C5EECnnMHQN5dpJP2o=";
             meta = {

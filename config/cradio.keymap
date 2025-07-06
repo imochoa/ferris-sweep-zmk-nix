@@ -294,7 +294,7 @@
             bindings = <
             &kp ESC           &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR        &mt UNDER MINUS     &kp BKSP
             &ht LSHIFT  TAB   &ht LALT GRAVE  &ht LCTRL SQT  &ht LGUI EQUAL  &none       /* | */    &none     &ht RGUI LPAR  &ht RCTRL RPAR  &ht RALT BSLH       &ht RSHIFT ENTER
-            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp DOWN       &kp UP          &kp LBKT            &kp RBKT 
+            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp UP         &kp DOWN        &kp LBKT            &kp RBKT 
                                                              &to NUM         &none       /* | */    &none     &to BAS
             >;
         };

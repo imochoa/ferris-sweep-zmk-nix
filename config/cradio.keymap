@@ -38,17 +38,6 @@
 #define NAV 3
 #define SYS 4
 
-//╭────┬────┬────┬────┬────╮   ╭────┬────┬────┬────┬────╮
-//│ 0  │ 1  │ 2  │ 3  │ 4  │   │ 5  │ 6  │ 7  │ 8  │ 9  │
-//├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
-//│ 10 │ 11 │ 12 │ 13 │ 14 │   │ 15 │ 16 │ 17 │ 18 │ 19 │
-//├────┼────┼────┼────┼────┤   ├────┼────┼────┼────┼────┤
-//│ 20 │ 21 │ 22 │ 23 │ 24 │   │ 25 │ 26 │ 27 │ 28 │ 29 │
-//╰────┴────┴────┼────┼────┤   ├────┼────┼────┴────┴────╯
-//               │ 30 │ 31 │   │ 32 │ 33 │
-//               ╰────┴────╯   ╰────┴────╯
-
-
 // rango keyboard toggle with ctrl-shift-5
 
 // {{{1 TREE
@@ -69,7 +58,7 @@
         // };
         combo_windows {
             // Windows key was missing!
-            key-positions = <13 16>;
+            key-positions = <LM1 RM1>;
             timeout-ms = <50>;
             // layers = < BAS SYM >;
             bindings = <&kp LWIN>;
@@ -77,7 +66,7 @@
         combo_esc {
             // Wanted a way to avoid 2 layer switches while pressing escape in vim
             // emulates C-[
-            key-positions = <20 9>;
+            key-positions = <LB4 RT4>;
             timeout-ms = <50>;
             // layers = < BAS SYM >;
             bindings = <&kp ESC>;
@@ -96,14 +85,15 @@
             layers=<BAS SYS>;
             bindings = <&to SYS>;
         };
+        // it's good to have a way to switch to the system layer on each half of the keyboard
         lcombo_to_sys {
             timeout-ms = <50>;
-              key-positions = <4 14 24>;
+            key-positions = <LT0 LM0 LB0>;
             bindings = <&to SYS>;
         };
         rcombo_to_sys {
             timeout-ms = <50>;
-              key-positions = <5 15 25>;
+            key-positions = <RT0 RM0 RB0>;
             bindings = <&to SYS>;
         };
         
@@ -300,8 +290,6 @@
 //        };
     };
 
-    // #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT  k2  &ht LCTRL k3  &ht LGUI  k4
-    // #define HRMR(k1,k2,k3,k4) &ht RGUI  k1  &ht RCTRL k2  &ht RALT  k3  &ht RSHFT k4
     
 
 // |  {{{1 Keymap

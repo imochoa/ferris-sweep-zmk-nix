@@ -15,18 +15,7 @@
 
 #include "./34.h"
 
-// https://github.com/urob/zmk-helpers/raw/main/docs/img/key_labels_example.png
 
-// https://peccu.github.io/zmk-cheat-sheet/
-// https://franknoirot.co/posts/ferris-sweep-keyboard-layout
-// https://github.com/benvallack/zmk-config/blob/master/config/cradio.keymap
-//
-// https://zmk.dev/docs/keymaps/list-of-keycodes
-// auto-layer https://github.com/urob/zmk-auto-layer
-// switch out of a layer automatically when pressing an unrelated key (e.g. number layer when not pressing a num)
-
-// To flash:
-// 2x reset OR Bootloader 
 
 // Home row mods macro
 #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT  k2  &ht LCTRL k3  &ht LGUI  k4
@@ -35,8 +24,8 @@
 #define BAS 0
 #define SYM 1
 #define NUM 2
-#define NAV 3
-#define SYS 4
+// #define NAV 3
+#define SYS 3
 
 // rango keyboard toggle with ctrl-shift-5
 
@@ -50,20 +39,14 @@
     combos {
         compatible = "zmk,combos";
         // Keys
-        // combo_esc {
-        //     key-positions = <10 19>; // INPUT
-        //     timeout-ms = <50>;
-        //     // layers = < BAS SYM >;
-        //     bindings = <&kp ESC>; // OUTPUT
-        // };
-        combo_windows {
+        key_super {
             // Windows key was missing!
             key-positions = <LM1 RM1>;
             timeout-ms = <50>;
             // layers = < BAS SYM >;
             bindings = <&kp LWIN>;
         };
-        combo_esc {
+        key_escape {
             // Wanted a way to avoid 2 layer switches while pressing escape in vim
             // emulates C-[
             key-positions = <LB4 RT4>;
@@ -71,15 +54,14 @@
             // layers = < BAS SYM >;
             bindings = <&kp ESC>;
         };
-
         // Layers
-        // gaming_layer_toggle {
+        // toggle_gaming_layer {
         //     key-positions = <0 10 20>;
         //     timeout-ms = <50>;
         //     layers=<BAS GAM>;
         //     bindings = <&tog GAM>;
         // };
-        combo_to_sys_layer {
+        to_sys_layer {
             timeout-ms = <50>;
             key-positions = <4 14 24>;
             layers=<BAS SYS>;
@@ -97,130 +79,17 @@
             bindings = <&to SYS>;
         };
         
-        // combo_to_base_layer {
-        //     timeout-ms = <50>;
-        //     key-positions = <31 32>;
-        //     layers=<SYM NUM SYS>;
-        //     bindings = <&to BAS>;
-        // };
-        // rcombo_to_base {
-        //     timeout-ms = <50>;
-          //     key-positions = <32 6>;
-        //     bindings = <&to BAS>;
-        // };
-        // lcombo_to_base {
-        //     timeout-ms = <50>;
-          //     key-positions = <31 3>;
-        //     bindings = <&to BAS>;
-        // };
-        // rcombo_to_sym {
-        //     timeout-ms = <50>;
-          //     key-positions = <32 7>;
-        //     bindings = <&to SYM>;
-        // };
-        // lcombo_to_sym {
-        //     timeout-ms = <50>;
-          //     key-positions = <31 2>;
-        //     bindings = <&to SYM>;
-        // };
-        // rcombo_to_num {
-        //     timeout-ms = <50>;
-          //     key-positions = <32 8>;
-        //     bindings = <&to NUM>;
-        // };
-        // lcombo_to_num {
-        //     timeout-ms = <50>;
-          //     key-positions = <31 1>;
-        //     bindings = <&to NUM>;
-        // };
-        // rcombo_to_nav {
-        //     timeout-ms = <50>;
-          //     key-positions = <32 9>;
-        //     bindings = <&to NAV>;
-        // };
-        // lcombo_to_nav {
-        //     timeout-ms = <50>;
-          //     key-positions = <31 0>;
-        //     bindings = <&to NAV>;
-        // };
-        //
-        // combo_to_sym_layer {
-        //     timeout-ms = <50>;
-        //     key-positions = <31 33>;
-        //     layers = <BAS NUM>;
-        //     bindings = <&to SYM>;
-        // };
-        // combo_to_num_layer {
-        //     timeout-ms = <50>;
-        //     key-positions = <30 32>;
-        //     layers = <BAS SYM>;
-        //     bindings = <&to NUM>;
-        // };
     };
 
 // |  {{{1 Macros
 // https://zmk.dev/docs/keymaps/behaviors/macros
     macros {
-        dodgeslide: dodgeslide { // space 40ms wheeldown 15ms wheel up space 50ms e down 150 ms e up
-            label = "Darktide Dodge Slide";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>; // Number of arguments
-            wait-ms = <40>;
-            bindings
-                = <&macro_tap &kp TAB>
-                , <&macro_wait_time 200>
-                , <&macro_tap &kp LCTRL>
-                ;
-        };
-
-        // // 2 params macro
-        // my_two_param_macro: my_two_param_macro {
-        //     // ...
-        //     compatible = "zmk,behavior-macro-two-param";
-        //     #binding-cells = <2>; // Must be 2
-        //     bindings = /* ... */;
-        // };
-
-        // Unicode keys
-        // https://askubuntu.com/questions/1171633/i-can-use-alt-x-to-enter-unicode-on-an-old-machine-how-is-this-possible
-        euro_macro: euro_macro {
-            label = "euro macro";
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings
-                    = <&macro_press   &kp LCTRL>
-                    , <&macro_press   &kp LSHFT>
-                    , <&macro_tap     &kp U &kp N2 &kp N0 &kp A &kp C &kp ENTER >
-                    , <&macro_release &kp LCTRL>
-                    , <&macro_release &kp LSHFT>
-                    ;
-        };
     };
   
 // |  {{{1 Behaviors
 // https://zmk.dev/docs/keymaps/behaviors#key-press-behaviors
 // https://zmk.dev/docs/keymaps/behaviors#user-defined-behaviors
     behaviors {
-        // [if HELD] if PRESSED {TAPPED}
-        // key press &kp KEY
-        // tap dance &td0 KEY1 KEY2 KEY3
-        // mod-tap &mt [MODIFIER] KEY
-        // layer-tap &lt [LAYER] KEY
-        // momentary layer &mo [LAYER]
-        // to layer &to LAYER
-        // toggle layer &tog LAYER
-        // sticky key &sk MODIFIER
-        // sticky layer &sl LAYER
-        // Original ht
-        // ht: hold_tap {
-        //     compatible = "zmk,behavior-hold-tap";
-        //     #binding-cells = <2>;
-        //     flavor = "tap-preferred";
-        //     tapping-term-ms = <220>;
-        //     quick-tap-ms = <150>;
-        //     require-prior-idle-ms = <100>;
-        //     bindings = <&kp>, <&kp>;
-        // };
         ht: hold_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -238,15 +107,6 @@
             tapping-term-ms = <200>;
             bindings = <&kp N1>, <&kp N2>, <&kp N3>; // outputs
         };
-        // td_currency: td_currency {
-        //     compatible = "zmk,behavior-tap-dance";
-        //     label = "TAPDANCE Currency";
-        //     #binding-cells = <0>;
-        //     tapping-term-ms = <150>;
-        //     // quick-tap-ms = <0>;
-        //     // flavor="tap-preferred";
-        //     bindings = <&kp DOLLAR>, <&euro_macro>;
-        // };
         // https://zmk.dev/docs/keymaps/behaviors/hold-tap?examples=home_row_mods#layer-tap
         /* urob timeless HRM */
         /* Left-hand HRMs. */
@@ -290,8 +150,6 @@
        };
     };
 
-    
-
 // |  {{{1 Keymap
     keymap {
         compatible = "zmk,keymap";
@@ -308,41 +166,42 @@
         };
 
         // {{{1 LAYER 1 -> SYM
-        // TODO: put unused keys in <24> <25> (e.g. ^ %)
         symbols_layer {
             display-name = "Symbols";
             bindings = <
-            &kp ESC           &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR         &mt UNDER MINUS   &none
-            &hml LSHIFT  1    &hml LALT GRAVE &hml LCTRL SQT &hml LGUI EQUAL &none       /* | */    &none     &hmr RGUI LPAR &hmr RCTRL RPAR  &hmr RALT BSLH    &hmr RSHIFT ENTER
-            &kp EXCL          &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp UP         &kp DOWN         &kp LBKT          &kp RBKT 
-                                                             &trans         &trans       /* | */    &trans    &trans
-            >;
+            &kp EXCL          &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR         &mt UNDER MINUS   &kp EQUAL
+            &hml LSHIFT TILDE &hml LALT GRAVE &hml LCTRL SQT &hml LGUI DQT   &none       /* | */    &none     &hmr RGUI LPAR &hmr RCTRL RPAR  &hmr RALT BSLH    &hmr RSHIFT ENTER
+            &none             &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp UP         &kp DOWN         &kp LBKT          &kp RBKT 
+                                                             &trans          &trans      /* | */    &trans    &trans
+            >; 
+            // " is a bit awkward to type
+            // left-side shift requires left thumb and right shift -> weird! avoid it
+            // TODO: put unused keys in <24> <25> (e.g. ^ %)
         };
-        // smart number layer?
         // {{{1 LAYER 2 -> NUM
-        // F1 - F24
         num_layer {
             display-name = "Numbers";
             bindings = <
-              &kp ESC          &none           &none            &none           &none      /* | */   &kp MINUS    &kp N7       &kp N8        &kp N9          &kp BKSP
-              &hml LSHIFT TAB  &hml LALT HASH  &hml LCTRL HASH  &hml LGUI HASH  &kp EQUAL  /* | */   &none        &hmr RGUI N4 &hmr RCTRL N5 &hmr RALT  N6   &hmr RSHIFT ENTER
-              &none            &none           &none            &none           &to NAV    /* | */   &kp N0       &kp N1       &kp N2        &kp N3          &kp N0
-                                                                &trans          &trans     /* | */   &trans     &trans
+              &kp ESC          &none           &none            &none           &none      /* | */   &kp MINUS   &kp N7       &kp N8        &kp N9          &none
+              &hml LSHIFT TAB  &hml LALT HASH  &hml LCTRL HASH  &hml LGUI HASH  &kp EQUAL  /* | */   &none       &hmr RGUI N4 &hmr RCTRL N5 &hmr RALT  N6   &hmr RSHIFT ENTER
+              &none            &none           &none            &none           &none      /* | */   &none       &kp N1       &kp N2        &kp N3          &kp N0
+                                                                &trans          &trans     /* | */   &trans      &trans
               >;
+              // F1 - F24
+              // smart number layer?
         };
-        // TODO: fn layer?
 
-        // {{{1 LAYER 3
-         nav_layer {
-             display-name = "Nav";
-             bindings = <
-               &kp N1       &kp N2  &kp N3  &kp N4      &kp N5  /* | */    &none       &none      &none       &none        &kp BKSP
-               &kp LSHIFT   &kp Q   &kp W   &kp E       &kp R   /* | */    &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT    &kp ENTER
-               &kp LCTRL    &kp A   &kp S   &kp D       &kp G   /* | */    &none       &kp UP     &kp DOWN    &none        &none
-                                            &kp SPACE   &none   /* | */    &none       &to BAS
-             >;
-         };
-         // TODO: get the navigation commands from ben
+        // // {{{1 LAYER 3
+        //  nav_layer {
+        //      display-name = "Nav";
+        //      bindings = <
+        //        &kp N1       &kp N2  &kp N3  &kp N4      &kp N5  /* | */    &none       &none      &none       &none        &kp BKSP
+        //        &kp LSHIFT   &kp Q   &kp W   &kp E       &kp R   /* | */    &kp LEFT    &kp DOWN   &kp UP      &kp RIGHT    &kp ENTER
+        //        &kp LCTRL    &kp A   &kp S   &kp D       &kp G   /* | */    &none       &kp UP     &kp DOWN    &none        &none
+        //                                     &kp SPACE   &none   /* | */    &none       &to BAS
+        //      >;
+        //  };
+        //  // TODO: get the navigation commands from ben
         
         // {{{1 LAYER 4
         sys_layer {
@@ -352,31 +211,16 @@
             &studio_unlock &bootloader   &none        &none         &none   /* | */    &none   &none         &none         &bootloader   &studio_unlock 
             &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0  &none   /* | */    &none   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
             &bt BT_CLR     &none         &none        &none         &none   /* | */    &none   &none         &none         &none         &bt BT_CLR
-                                                      &none         &none   /* | */    &none   &to BAS 
+                                                      &trans        &trans  /* | */   &trans      &trans
             >;
         };
 
         // {{{1 LAYER 5
 
-        // // {{{1 LAYER 6
-        // gaming_layer {
-        //     display-name = "Gaming";
-        //     bindings = < 
-        //     &kp N1    &kp N2 &kp N3 &kp N4      &kp N5       &trans &trans &trans &trans &trans
-        //     &kp LSHFT &kp A  &kp W  &kp D       &kp R        &trans &trans &trans &trans &trans 
-        //     &kp LCTRL &kp G  &kp S  &kp E       &kp F        &trans &trans &trans &trans &trans 
-        //                             &dodgeslide &kp SPACE    &trans &trans
-        //     >; // &mkp MB3 // mouse button 3
-        // };
+        // {{{1 LAYER 6
+
     };
 };
-
-// {{{1 Reference
-
-// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans
-// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-// &trans &trans &trans &trans &trans &trans &trans &trans &trans &trans 
-//                      &trans &trans &trans &trans
 
 
 // vim:fdm=marker:fen:fdl=0:

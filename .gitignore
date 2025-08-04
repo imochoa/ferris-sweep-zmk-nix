@@ -6,6 +6,7 @@
 /build
 /result
 
-*.svg
-*.png
 *.pdf
+*.png
+*.svg
+*.uf2

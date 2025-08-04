@@ -26,18 +26,9 @@
         rec {
           default = firmware;
 
-          flash = zmk-nix.packages.${system}.flash.override { inherit firmware; };
-
-          update = zmk-nix.packages.${system}.update;
-
           firmware = zmk-nix.legacyPackages.${system}.buildSplitKeyboard {
-            # Need to be configured!
-            board = "nice_nano_v2";
-            shield = "cradio_%PART%";
-            enableZmkStudio = true;
-            extraCmakeFlags = [ "-DCONFIG_ZMK_STUDIO=y" ];
-            # Defaults
             name = "firmware";
+
             src = nixpkgs.lib.sourceFilesBySuffices self [
               ".board"
               ".cmake"
@@ -54,13 +45,20 @@
               # My additions
               ".h"
             ];
-            zephyrDepsHash = "sha256-FzDnh6e0u+Zy1JYW7exQrP1I8C5EECnnMHQN5dpJP2o=";
-            meta = {
-              description = "ZMK firmware";
-              license = nixpkgs.lib.licenses.mit;
-              platforms = nixpkgs.lib.platforms.all;
-            };
+
+            board = "nice_nano_v2";
+            shield = "cradio_%PART%";
+
+            zephyrDepsHash = "sha256-ekA+YrH3fu0b6EVUhh3q7hUzQZjqFIXqUm2AoQ49Xo8=";
+
+            enableZmkStudio = true;
+            # extraCmakeFlags = [ "-DCONFIG_ZMK_STUDIO=y" ];
+            # extraWestBuildFlags = [];
+            # snippets
           };
+
+          flash = zmk-nix.packages.${system}.flash.override { inherit firmware; };
+          update = zmk-nix.packages.${system}.update;
 
           layoutImage =
             let

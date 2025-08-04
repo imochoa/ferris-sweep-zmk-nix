@@ -35,6 +35,9 @@ local-layout:
   firefox "file://{{ justfile_directory() }}/sweep_keymap.ortho.svg"
   find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'pipx run keymap-drawer parse --columns 10 -z ./config/cradio.keymap > sweep_keymap.yaml && pipx run keymap-drawer draw sweep_keymap.yaml > sweep_keymap.ortho.svg'
 
+# copy uf2 to non-link
+# find ./result/ -type l -exec readlink -f {} \;
+# cp $(readlink -f result/zmk_left.uf2) left.uf2
 
 develop-layout:
   # @just layout-img

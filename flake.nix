@@ -49,7 +49,7 @@
             board = "nice_nano_v2";
             shield = "cradio_%PART%";
 
-            zephyrDepsHash = "sha256-ekA+YrH3fu0b6EVUhh3q7hUzQZjqFIXqUm2AoQ49Xo8=";
+            zephyrDepsHash = "sha256-HGdzSpppZuZ2KzBAzGrNImNLf1aUPqlJtEID6yO06Wk=";
 
             enableZmkStudio = true;
             # extraCmakeFlags = [ "-DCONFIG_ZMK_STUDIO=y" ];

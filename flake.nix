@@ -62,7 +62,8 @@
 
           layoutImage =
             let
-              keymap-drawer = import ./keymap-drawer.nix { inherit pkgs lib; };
+              # keymap-drawer = import ./keymap-drawer.nix { inherit pkgs lib; };
+              keymap-drawer = pkgs.python3Packages.callPackage ./nix/keymap-drawer.nix { };
             in
             pkgs.runCommand "layout"
               {

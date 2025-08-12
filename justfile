@@ -40,6 +40,9 @@ layout-img:
   rm -rf ./imgs
   mkdir -p ./imgs
   cp result/* imgs/
+  chown -R "$USER" ./imgs/
+  # not required! TODO: same for uf2 probably...
+  # find ./result/ -type f -exec cp "$(readlink -f {})" ./imgs \;
 
 # alias -g fullauto="find \$PWD -name '.*' -prune -o -print | entr zsh -c \"git commit -am 'auto' && git push\""
 

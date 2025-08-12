@@ -15,8 +15,20 @@ _default:
     @just --choose
 
 
+flash-left: build-firmware
+  printf "plug in left kb..."
+  cp $(readlink -f result/zmk_left.uf2) /media/imochoa/NICENANO/
+  # nix run .#flash --debug
+# copy uf2 to non-link
+# find ./result/ -type l -exec readlink -f {} \;
+# cp $(readlink -f result/zmk_left.uf2) left.uf2
+# fd . -tl result -x readlink -f
+#
+# during the flashing: open /media/imochoa
+
 flash-kb:
-  nix run .#flash --debug
+  # nix run .#flash --debug
+  nix run .#flash
 
 build-firmware:
   nix build .#firmware
@@ -38,6 +50,9 @@ local-layout:
 # copy uf2 to non-link
 # find ./result/ -type l -exec readlink -f {} \;
 # cp $(readlink -f result/zmk_left.uf2) left.uf2
+# fd . -tl result -x readlink -f
+#
+# during the flashing: open /media/imochoa
 
 develop-layout:
   # @just layout-img

@@ -61,23 +61,23 @@
         //     layers=<BAS GAM>;
         //     bindings = <&tog GAM>;
         // };
-        to_sys_layer {
-            timeout-ms = <50>;
-            key-positions = <4 14 24>;
-            layers=<BAS SYS>;
-            bindings = <&to SYS>;
-        };
-        // it's good to have a way to switch to the system layer on each half of the keyboard
-        lcombo_to_sys {
-            timeout-ms = <50>;
-            key-positions = <LT0 LM0 LB0>;
-            bindings = <&to SYS>;
-        };
-        rcombo_to_sys {
-            timeout-ms = <50>;
-            key-positions = <RT0 RM0 RB0>;
-            bindings = <&to SYS>;
-        };
+        // to_sys_layer {
+        //     timeout-ms = <50>;
+        //     key-positions = <4 14 24>;
+        //     layers=<BAS SYS>;
+        //     bindings = <&to SYS>;
+        // };
+        // // it's good to have a way to switch to the system layer on each half of the keyboard
+        // lcombo_to_sys {
+        //     timeout-ms = <50>;
+        //     key-positions = <LT0 LM0 LB0>;
+        //     bindings = <&to SYS>;
+        // };
+        // rcombo_to_sys {
+        //     timeout-ms = <50>;
+        //     key-positions = <RT0 RM0 RB0>;
+        //     bindings = <&to SYS>;
+        // };
         
     };
 
@@ -145,8 +145,8 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
        tri_layer {
-           if-layers = <1 2>;
-           then-layer = <3>;
+           if-layers = <SYM NUM>;
+           then-layer = <SYS>;
        };
     };
 
@@ -170,7 +170,7 @@
             display-name = "Symbols";
             bindings = <
             &kp EXCL          &kp AT          &kp HASH       &kp DOLLAR      &kp PRCNT   /* | */    &kp CARET &kp AMPS       &kp STAR         &mt UNDER MINUS   &kp EQUAL
-            &hml LSHIFT TILDE &hml LALT GRAVE &hml LCTRL SQT &hml LGUI DQT   &none       /* | */    &none     &hmr RGUI LPAR &hmr RCTRL RPAR  &hmr RALT BSLH    &hmr RSHIFT ENTER
+            &hml LSHIFT ESC   &hml LALT GRAVE &hml LCTRL SQT &hml LGUI DQT   &none       /* | */    &none     &hmr RGUI LPAR &hmr RCTRL RPAR  &hmr RALT BSLH    &hmr RSHIFT ENTER
             &none             &none           &kp LEFT       &kp RIGHT       &none       /* | */    &none     &kp UP         &kp DOWN         &kp LBKT          &kp RBKT 
                                                              &trans          &trans      /* | */    &trans    &trans
             >; 
@@ -182,8 +182,8 @@
         num_layer {
             display-name = "Numbers";
             bindings = <
-              &kp ESC          &none           &none            &none           &none      /* | */   &kp MINUS   &kp N7       &kp N8        &kp N9          &none
-              &hml LSHIFT TAB  &hml LALT HASH  &hml LCTRL HASH  &hml LGUI HASH  &kp EQUAL  /* | */   &none       &hmr RGUI N4 &hmr RCTRL N5 &hmr RALT  N6   &hmr RSHIFT ENTER
+              &none            &none           &none            &none           &none      /* | */   &kp MINUS   &kp N7       &kp N8        &kp N9          &none
+              &hml LSHIFT ESC  &hml LALT HASH  &hml LCTRL HASH  &hml LGUI HASH  &kp EQUAL  /* | */   &none       &hmr RGUI N4 &hmr RCTRL N5 &hmr RALT  N6   &hmr RSHIFT ENTER
               &none            &none           &none            &none           &none      /* | */   &none       &kp N1       &kp N2        &kp N3          &kp N0
                                                                 &trans          &trans     /* | */   &trans      &trans
               >;
@@ -208,10 +208,10 @@
           // Don't need &sys_reset, right?
             display-name = "System";
             bindings = <
-            &studio_unlock &bootloader   &none        &none         &none   /* | */    &none   &none         &none         &bootloader   &studio_unlock 
-            &bt BT_SEL 3   &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0  &none   /* | */    &none   &bt BT_SEL 0  &bt BT_SEL 1  &bt BT_SEL 2  &bt BT_SEL 3
-            &bt BT_CLR     &none         &none        &none         &none   /* | */    &none   &none         &none         &none         &bt BT_CLR
-                                                      &trans        &trans  /* | */   &trans      &trans
+            &none            &none         &none        &none         &none         /* | */    &none        &none         &none         &none         &studio_unlock 
+            &bt BT_SEL 3     &bt BT_SEL 2  &bt BT_SEL 1 &bt BT_SEL 0  &none         /* | */    &none        &none         &none         &none         &none
+            &studio_unlock   &none         &none        &none         &bootloader   /* | */    &bootloader  &none         &none         &none         &bt BT_CLR
+                                                        &trans        &trans        /* | */    &trans       &trans
             >;
         };
 

@@ -14,10 +14,9 @@ alias b := build-firmware
 _default:
     @just --choose
 
-
 flash-left: build-firmware
   printf "plug in left kb..."
-  cp $(readlink -f result/zmk_left.uf2) /media/imochoa/NICENANO/
+  cp $(readlink -f ./result/zmk_left.uf2) "/media/$USER/NICENANO/"
   # nix run .#flash --debug
 # copy uf2 to non-link
 # find ./result/ -type l -exec readlink -f {} \;
@@ -27,11 +26,18 @@ flash-left: build-firmware
 # during the flashing: open /media/imochoa
 
 flash-kb:
+  open "/media/$USER"
   # nix run .#flash --debug
   nix run .#flash
 
 build-firmware:
   nix build .#firmware
+  rm -rf ./uf2
+  mkdir -p ./uf2
+  cp ./result/zmk_left.uf2 uf2/
+  cp ./result/zmk_right.uf2 uf2/
+  chown -R "$USER" ./uf2/
+
 
 # TODO look into watchman!
 # \ls ./flake.nix |  entr -d -c just layout-img

@@ -1,4 +1,5 @@
 # https://docs.zephyrproject.org/latest/develop/west/manifest.html
+
 # west.yml
 # ├── remotes are github orgs
 # │   └── zmkfirmware
@@ -6,6 +7,7 @@
 #     └── zmk
 #         ├── from remote "zmkfirmware"
 #         └── revision: commit/branch/tag
+
 manifest:
   remotes:
     - name: zmkfirmware
@@ -22,11 +24,13 @@ manifest:
     # - name: zmk-auto-layer
     #   remote: urob
     #   revision: v0.3.0 # set to same version as zmk above
-    # - name: zmk-helpers
-    #   remote: urob
-    #   revision: main
+    - name: zmk-helpers
+      remote: urob
+      revision: v0.3.0 # set to same version as zmk above
+    # TODO: For pinning?
+    # https://github.com/zmkfirmware/zephyr
     # - name: zephyr
-    #   revision: v4.2.0
-    #   # path: zephyr
+    #   remote: zmkfirmware
+    #   revision: v3.5.0+zmk-fixes
   self:
     path: config

@@ -53,7 +53,10 @@
 
             enableZmkStudio = true;
             # extraCmakeFlags = [ "-DCONFIG_ZMK_STUDIO=y" ];
-            # extraWestBuildFlags = [];
+            # https://zmk.dev/docs/development/local-toolchain/build-flash#building-with-external-modules
+            extraWestBuildFlags = [
+              # "-DZMK_EXTRA_MODULES=''"/urob/zmk-helpers''""
+            ];
             # snippets
           };
 

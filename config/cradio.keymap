@@ -9,7 +9,14 @@
 
 #include <dt-bindings/zmk/pointing.h> // https://github.com/zmkfirmware/zmk/blob/main/app/include/dt-bindings/zmk/pointing.h
 #include "./34.h"
+#include "./helper.h"
 
+// // https://github.com/urob/zmk-helpers/tree/main?tab=readme-ov-file#unicode-characters-and-language-collection
+// // #define HOST_OS 1 // Linux
+// #define HOST_OS 2 // MacOS
+// // #include "zmk-helpers/helper.h"
+// // #include "zmk-helpers/unicode-chars/german.dtsi" // https://github.com/urob/zmk-helpers/blob/main/include/zmk-helpers/unicode-chars/german.dtsi
+// #include <zmk-helpers/unicode-chars/currency.dtsi> // https://github.com/urob/zmk-helpers/blob/main/include/zmk-helpers/unicode-chars/currency.dtsi
 
 // TODO: https://github.com/urob/zmk-helpers/blob/main/docs/core_helpers.md#zmk_unicode
 // TODO leader key?

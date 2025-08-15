@@ -1,3 +1,7 @@
+# NEVER HOTSWAP TRRS CABLES!
+> ONLY INSERT/REMOVE THEM WHEN THE BOARD IS COMPLETELY OFF
+
+
 # ZMK
 
 - format with https://github.com/mskelton/dtsfmt?

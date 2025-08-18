@@ -1,13 +1,19 @@
-/.west
+# nix
 /.direnv
-/modules
-/zephyr
-/zmk
-/build
 /result
 
+# outputs
 *.pdf
 *.png
 *.svg
 *.uf2
 /uf2
+
+# ZMK & Zephyr
+/.west
+/build
+/modules
+/firmware
+/zephyr
+/zmk
+/draw/base.yaml

@@ -2,6 +2,11 @@
 > ONLY INSERT/REMOVE THEM WHEN THE BOARD IS COMPLETELY OFF
 
 
+legale.dts-formatter # todo set up the formatter?
+plorefice.devicetree
+
+todo bettera/ spadin.zmk-tools
+
 # ZMK
 
 - format with https://github.com/mskelton/dtsfmt?

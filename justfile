@@ -1,5 +1,12 @@
 set positional-arguments := true
 
+
+
+# config := absolute_path('config')
+# build := absolute_path('.build')
+# out := absolute_path('firmware')
+# draw := absolute_path('draw')
+
 # -e Exit immediately if a command exits with a non-zero status.
 # -u Treat unbound variables as an error when substituting.
 # -c If set, commands are read from string. This option is used to provide commands that don't come from a file.
@@ -71,3 +78,63 @@ develop-layout:
   find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage'
   # find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage && fd -epdf . result/ | head -n1 | xargs xdg-open'
   # \ls "config/" | entr -d nix build .#layoutImage
+
+
+# initialize west
+init:
+    west init -l config
+    west update --fetch-opt=--filter=blob:none
+    west zephyr-export
+
+# build-single board shield snippet artifact *west_args:
+#     #!/usr/bin/env bash
+#     set -euo pipefail
+#     artifact="${artifact:-${shield:+${shield// /+}-}${board}}"
+#     build_dir="{{ build / '$artifact' }}"
+
+#     echo "Building firmware for $artifact..."
+#     west build -s zmk/app -d "$build_dir" -b $board {{ west_args }} ${snippet:+-S "$snippet"} -- \
+#         -DZMK_CONFIG="{{ config }}" ${shield:+-DSHIELD="$shield"}
+
+#     if [[ -f "$build_dir/zephyr/zmk.uf2" ]]; then
+#         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.uf2" "{{ out }}/$artifact.uf2"
+#     else
+#         mkdir -p "{{ out }}" && cp "$build_dir/zephyr/zmk.bin" "{{ out }}/$artifact.bin"
+#     fi
+
+build-left:
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    # snippet and config from zmk
+    # [ZMK Studio](https://zmk.dev/docs/features/studio#accessing-zmk-studio)
+    
+    mkdir -p build/left
+    west build -p -s zmk/app -d build/left -b nice_nano_v2 -S "studio-rpc-usb-uart" -- -DZMK_CONFIG="/Users/imochoa/Code/ferris-sweep-zmk-nix/config" -DSHIELD=cradio_left -DCONFIG_ZMK_STUDIO=y
+    cp build/left/zephyr/zmk.uf2 ./build/zmk_left.uf2
+    
+    mkdir -p build/right
+    west build -p -s zmk/app -d build/right -b nice_nano_v2 -- -DZMK_CONFIG="/Users/imochoa/Code/ferris-sweep-zmk-nix/config" -DSHIELD=cradio_right
+    cp build/right/zephyr/zmk.uf2 ./build/zmk_right.uf2
+
+# -DZMK_EXTRA_MODULES="/Users/imochoa/Code/ferris-sweep-zmk-nix" 
+# -DBOARD_ROOT="/Users/imochoa/Code/ferris-sweep-zmk-nix"
+# west build -s zmk/app -d build -b nice_nano_v2 -- -DZMK_CONFIG=`realpath config/` -DSHIELD=cradio/
+# update west
+update:
+    west update --fetch-opt=--filter=blob:none
+
+
+# clear build cache and artifacts
+# clean:
+#     rm -rf {{ build }} {{ out }}
+
+# clear all automatically generated files
+# clean-all: clean
+#     rm -rf .west zmk
+
+# clear nix cache
+clean-nix:
+    nix-collect-garbage --delete-old
+
+

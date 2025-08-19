@@ -12,6 +12,7 @@
 # ZMK & Zephyr
 /.west
 /build
+/.build
 /modules
 /firmware
 /zephyr

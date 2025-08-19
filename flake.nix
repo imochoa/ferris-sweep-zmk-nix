@@ -52,13 +52,11 @@
           };
 
           flash = zmk-nix.packages.${system}.flash.override { inherit firmware; };
-          # update = zmk-nix.packages.${system}.update;
 
           layoutImage = pkgs.callPackage ./nix/layout-img-package.nix { };
         }
       );
       devShells = forAllSystems (
-
         system:
         let
           pkgs = inputs.nixpkgs.legacyPackages.${system};

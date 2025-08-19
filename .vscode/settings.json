@@ -1,10 +1,10 @@
 {
     "editor.formatOnSave": true,
     "[dts]": {
-        "editor.formatOnSave": false
+        // "editor.formatOnSave": false
     },
     "files.associations": {
-        "config/*.keymap": "dts"
+        "*.keymap": "dts"
     },
     "nix": {
         "enableLanguageServer": true,

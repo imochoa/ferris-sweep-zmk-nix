@@ -53,13 +53,13 @@ develop-layout:
     # find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage && fd -epdf . result/ | head -n1 | xargs xdg-open'
     # \ls "config/" | entr -d nix build .#layoutImage
 
-# # parse & plot keymap
-# draw:
-#     #!/usr/bin/env bash
-#     set -euo pipefail
-#     keymap -c "{{ draw }}/config.yaml" parse -z "{{ config }}/base.keymap" --virtual-layers Combos >"{{ draw }}/base.yaml"
-#     yq -Yi '.combos.[].l = ["Combos"]' "{{ draw }}/base.yaml"
-#     keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/base.yaml" -k "ferris/sweep" >"{{ draw }}/base.svg"
+# parse & plot keymap
+draw:
+    #!/usr/bin/env bash
+    set -euo pipefail
+    keymap -c "{{ draw }}/config.yaml" parse -z "{{ config }}/cradio.keymap" --virtual-layers Combos >"{{ draw }}/base.yaml"
+    # yq -Yi '.combos.[].l = ["Combos"]' "{{ draw }}/base.yaml"
+    keymap -c "{{ draw }}/config.yaml" draw "{{ draw }}/base.yaml" -k "ferris/sweep" >"{{ draw }}/base.svg"
 
 # initialize west
 west-init:

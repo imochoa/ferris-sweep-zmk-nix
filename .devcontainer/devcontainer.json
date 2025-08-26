@@ -1,0 +1,21 @@
+{
+    "name": "default",
+    //https://mcr.microsoft.com/en-us/artifact/mar/devcontainers/base/about
+    "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+    "features": {
+        // "ghcr.io/devcontainers/features/docker-in-docker:2": {
+        //     "version": "latest"
+        // },
+        // "ghcr.io/devcontainers/features/go:1": {
+        //     "version": "1.23.3",
+        // },
+    },
+    "overrideFeatureInstallOrder": [
+        // "ghcr.io/devcontainers/features/python",
+        // "ghcr.io/devcontainers/features/docker-in-docker",
+    ],
+    "remoteEnv": {
+        "PODMAN_USERNS": "keep-id"
+    },
+    "containerUser": "vscode"
+}

@@ -28,19 +28,24 @@
   "customizations": {
     "vscode": {
       "extensions": [
-        "ms-vscode.cpptools",
+        // ZMK
         "spadin.zmk-tools",
         "plorefice.devicetree",
-        "usernamehw.errorlens",
-        // Formatting .dts dtsi
-        "legale.dts-formatter"
+        "legale.dts-formatter", // Does not work...
+        // C/C++
+        "ms-vscode.cpptools",
+        // ms-vscode.cpptools-extension-pack
+        "usernamehw.errorlens"
       ],
       "settings": {
+        // "files.associations": {
+        //   "*.keymap": "dts"
+        // },
         "editor.formatOnSave": true,
         "terminal.integrated.shell.linux": "/bin/bash"
         // "[dts]": {
-        //   "editor.defaultFormatter": ""
-        // },
+        //   "editor.defaultFormatter": "legale.dts-formatter"
+        // }
       }
     }
   },

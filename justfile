@@ -67,6 +67,8 @@ west-init:
     west init -l config
     west update --fetch-opt=--filter=blob:none
     west zephyr-export
+    git config --global --add safe.directory ./zmk
+    git config --global --add safe.directory ./zephyr
 
 # Builds with ZMK Studio
 build-firmware:

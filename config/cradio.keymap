@@ -109,7 +109,9 @@
 			quick-tap-ms = <150>;
 			require-prior-idle-ms = <100>;
 			bindings = <&kp>, <&kp>;
-			hold-trigger-key-positions = <KEYS_R THUMBS>;
+			// before "tapping term" any keys <PRESSED> NOT listed will "tap"
+			hold-trigger-key-positions = <KEYS_R THUMBS KEYS_HRM_L>;
+			// If set, modifies the previous to <RELEASED>
 			hold-trigger-on-release;
 		};
 		/* Right-hand HRMs. */
@@ -124,7 +126,7 @@
 			quick-tap-ms = <150>;
 			require-prior-idle-ms = <100>;
 			bindings = <&kp>, <&kp>;
-			hold-trigger-key-positions = <KEYS_L THUMBS>;
+			hold-trigger-key-positions = <KEYS_L THUMBS KEYS_HRM_R>;
 			hold-trigger-on-release;
 		};
 	};

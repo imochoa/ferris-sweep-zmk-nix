@@ -12,3 +12,5 @@ if [ -d "$WORKSPACE_DIR/tools/bsim" ]; then
   export BSIM_OUT_PATH="$WORKSPACE_DIR/tools/bsim/"
   export BSIM_COMPONENTS_PATH="$WORKSPACE_DIR/tools/bsim/components/"
 fi
+
+alias j='just'

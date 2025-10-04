@@ -2,6 +2,12 @@
 {
   "name": "ZMK Development",
   "dockerFile": "Dockerfile",
+  "build": {
+    "args": {
+      "USER_UID": "501" // 1000 by default
+      // "USER_GID": "20" // 1000 by default
+    }
+  },
   "runArgs": [
     "--security-opt",
     "label=disable"
@@ -10,6 +16,7 @@
     "WORKSPACE_DIR": "${containerWorkspaceFolder}",
     "PROMPT_COMMAND": "history -a"
   },
+  // "containerUser": "ubuntu", // 1000:1000 ubuntu
   "mounts": [
     "type=volume,source=zmk-root-user,target=/root",
     "type=volume,source=zmk-config,target=/workspaces/zmk-config",
@@ -24,11 +31,16 @@
         "ms-vscode.cpptools",
         "spadin.zmk-tools",
         "plorefice.devicetree",
-        "usernamehw.errorlens"
+        "usernamehw.errorlens",
+        // Formatting .dts dtsi
+        "legale.dts-formatter"
       ],
       "settings": {
         "editor.formatOnSave": true,
         "terminal.integrated.shell.linux": "/bin/bash"
+        // "[dts]": {
+        //   "editor.defaultFormatter": ""
+        // },
       }
     }
   },

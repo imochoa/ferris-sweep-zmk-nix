@@ -7,7 +7,7 @@ build := absolute_path('.build')
 result := absolute_path('result')
 draw := absolute_path('draw')
 home_dir := env('HOME')
-user := env('USER')
+# user := env('USER')
 
 # {{justfile-directory()}}
 
@@ -63,6 +63,7 @@ draw:
 
 # initialize west
 west-init:
+    # git config --global --add safe.directory /workspaces/ferris-sweep-zmk-nix/zmk
     west init -l config
     west update --fetch-opt=--filter=blob:none
     west zephyr-export
@@ -117,7 +118,7 @@ clean:
 
 # clear all automatically generated files
 clean-all: clean
-    rm -rf .west zmk
+    rm -rf .west zmk zephyr modules
 
 # clear nix cache
 clean-nix:

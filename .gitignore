@@ -1,5 +1,5 @@
 # nix
-/.direnv
+/\.direnv
 /result
 
 # outputs
@@ -9,16 +9,27 @@
 /uf2
 
 # ZMK & Zephyr
-/.west
-/build
-/.build
-/modules
-/firmware
-/zephyr
-/zmk
 /draw/base.yaml
 
 
 # OS
 \.DS_Store
 Thumbs.db
+ferris*
+
+/node_modules
+\.DS_Store
+
+/firmware
+!/firmware/.keep
+
+# West stuff
+/zmk
+/zephyr
+/modules
+/\.west
+/\.build
+
+# container dirs
+/\.cache
+/\.home

@@ -4,6 +4,8 @@
         // "editor.formatOnSave": false
     },
     "files.associations": {
+        // Allow comments in JSON files
+        "*.json": "jsonc",
         "*.keymap": "dts"
     },
     "nix": {

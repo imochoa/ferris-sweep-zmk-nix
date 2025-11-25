@@ -26,7 +26,6 @@
   },
   "remoteEnv": {
     "SSH_AUTH_SOCK": "/tmp/ssh-agent",
-    "MEOW": "1",
     "IS_DEVCONTAINER": "1",
     // For just modules 
     "JUST_UNSTABLE": "1"

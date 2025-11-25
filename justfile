@@ -43,6 +43,12 @@ devc-up:
       --skip-post-attach
     podman ps --last 1
 
+mkdirs:
+    @just devc-exec in-devc mkdirs
+
+hard-rmdirs:
+    @just devc-exec in-devc hard-rmdirs 
+
 # initialize west
 west-init:
     @just devc-exec in-devc west-init

@@ -34,10 +34,10 @@ RUN : \
 COPY .bashrc /home/$USERNAME/.bashrc
 RUN mkdir -p /workspace && \
     chown -R $USER_UID:$USER_GID /workspace
-RUN cp -r /home/ubuntu /tmp/home-backup
 WORKDIR /workspace/
 
 USER ubuntu
+RUN cp -r /home/ubuntu /tmp/home-backup
 
 # used by my justfile...
 ENV USER=$USERNAME

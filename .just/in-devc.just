@@ -1,13 +1,22 @@
 set positional-arguments := true
 set shell := ["bash", "-euco", "pipefail"]
 
-devc-mkdirs:
+_devc-check:
+    #!/usr/bin/env bash
+    if [ -z "$IS_DEVCONTAINER" ]; then
+      printf "NOT in devc\n"
+      exit 1
+    fi
+
+mkdirs: _devc-check
     mkdir -p "{{ justfile_directory() }}/modules"
     mkdir -p "{{ justfile_directory() }}/zmk"
     mkdir -p "{{ justfile_directory() }}/zephyr"
     mkdir -p "{{ justfile_directory() }}/.build"
     mkdir -p "{{ justfile_directory() }}/.tools"
     mkdir -p "{{ justfile_directory() }}/.home"
+    cp -r /tmp/home-backup/* "{{ justfile_directory() }}/.home/"
+
     # .west should be made via the init recipe!
     # mkdir -p "{{ justfile_directory() }}/.west"
     #
@@ -16,7 +25,7 @@ devc-mkdirs:
     # .cache
     # .cmake
 
-devc-hard-rmdirs: && devc-mkdirs
+hard-rmdirs: _devc-check && mkdirs
     rm -rf "{{ justfile_directory() }}/modules"
     rm -rf "{{ justfile_directory() }}/zmk"
     rm -rf "{{ justfile_directory() }}/zephyr"
@@ -26,8 +35,7 @@ devc-hard-rmdirs: && devc-mkdirs
     rm -rf "{{ justfile_directory() }}/.home"
 
 # initialize west
-[no-cd]
-west-init: devc-hard-rmdirs
+west-init: hard-rmdirs
     west init -l config
 
 # you might need to run this multiple times after "init"
@@ -38,11 +46,11 @@ west-update:
     git config --global --add safe.directory "{{ justfile_directory() }}/zephyr"
 
 # update west
-update:
+update: _devc-check 
     west update --fetch-opt=--filter=blob:none
 
 # Builds with ZMK Studio
-build-firmware:
+build-firmware: _devc-check
     #!/usr/bin/env bash
     set -euxo pipefail
     # https://www.reddit.com/r/ErgoMechKeyboards/comments/1hkhyht/guide_building_zmk_firmware_locally_with_only_a/
@@ -87,8 +95,6 @@ build-firmware:
 
     # redo init if the paths change..., call it multiple times
 
-
-
     #" west build -d /build/left -p -b "nice_nano_v2" \ -s /zmk-urchin/zmk/app \
     # -- -DSHIELD="urchin_left nice_view_adapter nice_view" \ -DZMK_CONFIG="/zmk-urchin/config" \
     # -DZMK_EXTRA_MODULES="/zmk-urchin/urchin-zmk-module"
@@ -99,7 +105,7 @@ build-firmware:
     # I won't go into details here. But you'd need the following extra flags in appropriate places to build a studio-compatible firmware. -S studio-rpc-usb-uart \ -DCONFIG_ZMK_STUDIO=y \
 
 # https://zmk.dev/docs/troubleshooting/connection-issues#reset-split-keyboard-procedure
-build-settings-reset-firmware:
+build-settings-reset-firmware: _devc-check
     #!/usr/bin/env bash
     set -euxo pipefail
     # https://www.reddit.com/r/ErgoMechKeyboards/comments/1hkhyht/guide_building_zmk_firmware_locally_with_only_a/

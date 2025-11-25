@@ -5,23 +5,25 @@ devc-mkdirs:
     mkdir -p "{{ justfile_directory() }}/modules"
     mkdir -p "{{ justfile_directory() }}/zmk"
     mkdir -p "{{ justfile_directory() }}/zephyr"
-    mkdir -p "{{ justfile_directory() }}/.cache"
     mkdir -p "{{ justfile_directory() }}/.build"
     mkdir -p "{{ justfile_directory() }}/.tools"
     mkdir -p "{{ justfile_directory() }}/.home"
     # .west should be made via the init recipe!
     # mkdir -p "{{ justfile_directory() }}/.west"
+    #
+    # TODO: copy .home to ~/home, then mount
+    # in ~
+    # .cache
+    # .cmake
 
 devc-hard-rmdirs: && devc-mkdirs
     rm -rf "{{ justfile_directory() }}/modules"
     rm -rf "{{ justfile_directory() }}/zmk"
     rm -rf "{{ justfile_directory() }}/zephyr"
-    rm -rf "{{ justfile_directory() }}/.cache"
     rm -rf "{{ justfile_directory() }}/.build"
     rm -rf "{{ justfile_directory() }}/.tools"
     rm -rf "{{ justfile_directory() }}/.west"
     rm -rf "{{ justfile_directory() }}/.home"
-    # .cmake in ~
 
 # initialize west
 [no-cd]

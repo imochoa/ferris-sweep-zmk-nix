@@ -6,7 +6,8 @@
     "files.associations": {
         // Allow comments in JSON files
         "*.json": "jsonc",
-        "*.keymap": "dts"
+        "*.keymap": "dts",
+        "*.just": "just",
     },
     "nix": {
         "enableLanguageServer": true,

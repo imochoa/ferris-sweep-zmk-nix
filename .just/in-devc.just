@@ -1,6 +1,8 @@
 set positional-arguments := true
 set shell := ["bash", "-euco", "pipefail"]
 
+out := absolute_path( justfile_directory() + "/firmware")
+
 _devc-check:
     #!/usr/bin/env bash
     if [ -z "$IS_DEVCONTAINER" ]; then
@@ -50,14 +52,14 @@ update: _devc-check
     west update --fetch-opt=--filter=blob:none
 
 # Builds with ZMK Studio
-build-firmware: _devc-check
+build-firmware: _devc-check && _ls_out
     #!/usr/bin/env bash
     set -euxo pipefail
     # https://www.reddit.com/r/ErgoMechKeyboards/comments/1hkhyht/guide_building_zmk_firmware_locally_with_only_a/
 
     # that you may need to run west update a few times for everything to be fetched.
     # west init -l config && west update
-    out="{{ justfile_directory() }}/firmware"
+    out="{{ out }}"
 
     mkdir -p "${out}"
     rm -rf "${out}/*.uf2"
@@ -105,14 +107,14 @@ build-firmware: _devc-check
     # I won't go into details here. But you'd need the following extra flags in appropriate places to build a studio-compatible firmware. -S studio-rpc-usb-uart \ -DCONFIG_ZMK_STUDIO=y \
 
 # https://zmk.dev/docs/troubleshooting/connection-issues#reset-split-keyboard-procedure
-build-settings-reset-firmware: _devc-check
+build-settings-reset-firmware: _devc-check && _ls_out
     #!/usr/bin/env bash
     set -euxo pipefail
     # https://www.reddit.com/r/ErgoMechKeyboards/comments/1hkhyht/guide_building_zmk_firmware_locally_with_only_a/
 
     # that you may need to run west update a few times for everything to be fetched.
     # west init -l config && west update
-    out="{{ justfile_directory() }}/firmware"
+    out="{{ out }}"
 
     mkdir -p "${out}"
 
@@ -139,3 +141,6 @@ build-settings-reset-firmware: _devc-check
     if [[ -f "${build}/zephyr/zmk.uf2" ]]; then
       cp "${build}/zephyr/zmk.uf2" "${out}/zmk_reset.uf2"
     fi
+
+_ls_out:
+    ls -la "{{ out }}"

@@ -1,17 +1,16 @@
 set positional-arguments := true
 set shell := ["bash", "-euco", "pipefail"]
 
-# config := absolute_path('config')
-
-alias b := build
+alias b := build-all
 
 mod draw ".just/draw.just"
+mod flash ".just/flash.just"
 mod in-devc ".just/in-devc.just"
 
 # Open picker with "jj" alias
 [no-cd]
 _default:
-    @just --list
+    @just --list --list-submodules
 
 # recipe context +collection:
 #     #!/usr/bin/env bash
@@ -69,7 +68,7 @@ build-firmware:
 build-settings-reset-firmware:
     @just devc-exec in-devc build-settings-reset-firmware
 
-build: build-firmware build-settings-reset-firmware
+build-all: build-firmware build-settings-reset-firmware
 
 fmt-just:
     @just --fmt --unstable

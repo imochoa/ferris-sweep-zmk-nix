@@ -126,3 +126,12 @@ Some combos where added to make it possible to use the keyboard one handed. They
 ## https://github.com/duckyb/zmk-sweep
 
 ## https://github.com/benvallack/zmk-config/blob/master/config/cradio.keymap
+
+
+# Required to get the name to update!
+# CONFIG_ZMK_SETTINGS_RESET_ON_START=y
+#
+# For end users, it is recommended to use a special shield named settings_reset to build a new firmware file, then flash that firmware. See example for building firmware using this shield in the troubleshooting docs.
+# https://zmk.dev/docs/troubleshooting/connection-issues#building-a-reset-firmware
+
+# If you use a local development environment to build firmware instead of GitHub Actions, pass the -DSHIELD=settings_reset argument when building, omitting all other -DSHIELD arguments.

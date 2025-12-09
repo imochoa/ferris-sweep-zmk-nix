@@ -5,12 +5,12 @@ set shell := ["bash", "-euco", "pipefail"]
 config := absolute_path('../config')
 out := absolute_path('../firmware')
 build := absolute_path('../.build')
-result := absolute_path('../result')
-draw := absolute_path('../draw')
-home_dir := env('HOME')
+# result := absolute_path('../result')
+# draw := absolute_path('../draw')
+# home_dir := env('HOME')
 mount := absolute_path('../mount')
-# user := env('USER')
 
+shield := "ergogenesis"
 
 [no-cd]
 n-podman-env:
@@ -45,11 +45,10 @@ west-init:
     git config --global --add safe.directory ./zmk
     git config --global --add safe.directory ./zephyr
 
-shield := "ergogenesis"
 
 # Builds with ZMK Studio
 [no-cd]
-build-firmware:
+build-firmware: && _ls_out
     #!/usr/bin/env bash
     set -euxo pipefail
 
@@ -103,3 +102,5 @@ clean:
 clean-all: clean
     rm -rf .west zmk zephyr modules
 
+_ls_out:
+    ls -la "{{out}}"

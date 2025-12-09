@@ -3,6 +3,8 @@
 /result
 
 # outputs
+/firmware
+!/firmware/.keep
 *.pdf
 *.png
 *.uf2
@@ -20,8 +22,7 @@ ferris*
 /node_modules
 \.DS_Store
 
-/firmware
-!/firmware/.keep
+
 
 # West stuff
 /zmk

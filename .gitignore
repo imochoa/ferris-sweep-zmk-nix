@@ -1,27 +1,24 @@
-# nix
+# coding
 /\.direnv
 /result
+*\.code-workspace
 
 # outputs
 /firmware
-!/firmware/.keep
-*.pdf
-*.png
-*.uf2
+!/firmware/\.keep
+*\.pdf
+*\.png
+*\.uf2
 /uf2
-
-# ZMK & Zephyr
-/draw/base.yaml
 
 
 # OS
 \.DS_Store
-Thumbs.db
+Thumbs\.db
 ferris*
 
+# JS
 /node_modules
-\.DS_Store
-
 
 
 # West stuff

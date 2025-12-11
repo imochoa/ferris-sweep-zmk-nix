@@ -1,0 +1,13 @@
+name: Build
+on:
+  workflow_dispatch:
+  # push:
+  #   paths:
+  #     - config/**
+  #     - build.yaml
+
+jobs:
+  build:
+    # TODO: pin it?
+    # https://github.com/zmkfirmware/zmk/blob/main/.github/workflows/
+    uses: zmkfirmware/zmk/.github/workflows/build.yml@main

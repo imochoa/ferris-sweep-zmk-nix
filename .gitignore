@@ -1,6 +1,7 @@
 # coding
 /\.direnv
 /result
+/\.artifacts
 *\.code-workspace
 
 # outputs

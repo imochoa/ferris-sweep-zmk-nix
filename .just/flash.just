@@ -70,9 +70,9 @@ _flash_one firmware:
   # ref: https://github.com/lilyinstarlight/zmk-nix/blob/f02a78c8c06d283ea1399c14aaec308bfb77dc1b/nix/flash.nix#L8
   # TODO: check for darwin
   # kb_dir="/media/$USER"
-  # kb_dir="/Volumes/"
+  kb_dir="/Volumes/"
   # testing
-  kb_dir="/Users/imochoa/Downloads"
+  # kb_dir="/Users/imochoa/Downloads"
 
   uf2="{{ out }}/${firmware}"
   [ ! -f "${uf2}" ] && exit 1

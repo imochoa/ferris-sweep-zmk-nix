@@ -12,20 +12,20 @@ mod in-devc ".just/in-devc.just"
 _default:
     @just --list --list-submodules
 
-gh-actions-build-user-config:
-  # no node in the neko 
-    nix run nixpkgs#act -- \
-    --action-offline-mode \
-    --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
-    --container-architecture linux/amd64 \
-    --workflows ".github/workflows/build-user-config.yml"
-    # nix run nixpkgs#act -- \
-    # --action-offline-mode \
-    # --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
-    # --container-architecture linux/amd64 \
-    # --platform ubuntu-latest=-self-hosted \
-    # --platform ubuntu-22.04=-self-hosted \
-    # --workflows ".github/workflows/build-user-config.yml"
+# gh-actions-build-user-config:
+#   # no node in the neko 
+#     nix run nixpkgs#act -- \
+#     --action-offline-mode \
+#     --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
+#     --container-architecture linux/amd64 \
+#     --workflows ".github/workflows/build-user-config.yml"
+#     # nix run nixpkgs#act -- \
+#     # --action-offline-mode \
+#     # --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
+#     # --container-architecture linux/amd64 \
+#     # --platform ubuntu-latest=-self-hosted \
+#     # --platform ubuntu-22.04=-self-hosted \
+#     # --workflows ".github/workflows/build-user-config.yml"
 
 # recipe context +collection:
 #     #!/usr/bin/env bash
@@ -78,6 +78,9 @@ update:
 # Builds with ZMK Studio
 build-firmware:
     @just devc-exec in-devc build-firmware
+
+generic-build +args:
+    @just devc-exec in-devc generic-build  {{ args }}
 
 # https://zmk.dev/docs/troubleshooting/connection-issues#reset-split-keyboard-procedure
 build-settings-reset-firmware:

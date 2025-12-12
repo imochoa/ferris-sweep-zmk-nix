@@ -18,11 +18,19 @@
 include:
   - board: nice_nano_v2
     shield: cradio_left
+    snippet: "studio-rpc-usb-uart"
+    cmake-args: "-DCONFIG_ZMK_STUDIO=y"
   - board: nice_nano_v2
     shield: cradio_right
-
+    snippet: "studio-rpc-usb-uart"
+    cmake-args: "-DCONFIG_ZMK_STUDIO=y"
+  - board: nice_nano_v2
+    shield: settings_reset
 #     snippet: studio-rpc-usb-uart
-#     cmake-args: -DCONFIG_ZMK_STUDIO=y
 #     artifact-name: corne_left_with_studio
 #
 ##     cmake-args: -DCONFIG_ZMK_USB_LOGGING=y
+#    snippet CANNOT be a list
+#    snippet: studio-rpc-usb-uart
+# can be a list
+# cmake-args: "-DCONFIG_ZMK_STUDIO=y -DSHIELD_DISPLAY=y"

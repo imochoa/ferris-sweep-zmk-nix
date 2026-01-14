@@ -17,9 +17,6 @@ RUN mkdir -p /home/$USERNAME/.local/bin
 RUN mkdir -p /home/$USERNAME/.vscode-server
 RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/.vscode-server
 
-# Ensure /home/container-user is owned by container-user
-# RUN chown -R $USER_UID:$USER_GID /home/$USERNAME/.vscode-server
-
 RUN mkdir -p /home/$USERNAME/project && \
   chown -R $USER_UID:$USER_GID /home/$USERNAME/project
 
@@ -30,20 +27,16 @@ RUN : \
   --no-install-recommends \
   just \
   ripgrep \
+  fd-find \
   fzf \
   && apt-get clean \
   && rm -rf /var/lib/apt/lists/* \
   && :
 
-COPY ./.devcontainer/.bashrc /home/$USERNAME/.bashrc
 RUN mkdir -p /workspace && \
   chown -R $USER_UID:$USER_GID /workspace
 WORKDIR /workspace/
 
 USER ubuntu
-# WARN:?
-RUN cp -r /home/ubuntu /tmp/home-backup
-
-# used by my justfile...
-ENV USER=$USERNAME
+# ENV USER=$USERNAME
 

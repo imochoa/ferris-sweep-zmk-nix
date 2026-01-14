@@ -25,6 +25,10 @@
     "JUST_UNSTABLE": "1"
   },
   "mounts": [
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+    // podman volume create --uid 1000 --gid 1000 zmk-repo-home
+    "source=zmk-repo-home,target=/home/vscode,type=volume,consistency=cached",
+    "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/home/vscode/.bashrc,type=bind,consistency=cached"
     // TODO: home 
     // "type=bind,source=${localWorkspaceFolder}/.home,target=/home/ubuntu"
     // Permission errors...

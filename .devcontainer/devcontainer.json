@@ -4,31 +4,40 @@
   "build": {
     "context": "..",
     "dockerfile": "Dockerfile",
-    "args": {}
+    "args": {
+      "BASE_IMAGE": "docker.io/zmkfirmware/zmk-dev-arm",
+      "BASE_TAG": "3.5"
+      // "BASE_TAG": "4.1"
+    }
   },
-  "runArgs": [
-    "--userns=keep-id",
-    "--security-opt",
-    "label=disable"
-  ],
+  // "runArgs": [
+  //   "--userns=keep-id",
+  //   "--security-opt",
+  //   "label=disable"
+  // ],
   // Rootless podman
   // "updateRemoteUserUID": true,
   "containerEnv": {
-    "WORKSPACE_DIR": "${containerWorkspaceFolder}",
+    // "WORKSPACE_DIR": "${containerWorkspaceFolder}",
     // # export "CMAKE_PREFIX_PATH=/zmk-urchin/zephyr:$CMAKE_PREFIX_PATH"
     // rm -rf /workspaces/firmware/*.uf2
     // export Zephyr_DIR="/workspaces/zephyr/share/zephyr-package/cmake"
-    "PROMPT_COMMAND": "history -a",
-    "SSH_AUTH_SOCK": "/tmp/ssh-agent",
-    "IS_DEVCONTAINER": "1",
+    // "PROMPT_COMMAND": "history -a",
+    //match above
+    // "ZEPHYR_VERSION": "4.1",
+    "ZEPHYR_VERSION": "3.5",
+    // CMAKE_PREFIX_PATH="{{ justfile_directory() }}/zephyr:\$CMAKE_PREFIX_PATH
+    // "SSH_AUTH_SOCK": "/tmp/ssh-agent",
+    "IS_DEVCONTAINER": "1"
     // For just modules 
-    "JUST_UNSTABLE": "1"
+    // "JUST_UNSTABLE": "1"
   },
+  "postAttachCommand": "./.devcontainer/scripts/postAttachCommand.sh",
   "mounts": [
-    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/vscode/.ssh,type=bind,consistency=cached",
+    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/ubuntu/.ssh,type=bind,consistency=cached",
     // podman volume create --uid 1000 --gid 1000 zmk-repo-home
-    "source=zmk-repo-home,target=/home/vscode,type=volume,consistency=cached",
-    "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/home/vscode/.bashrc,type=bind,consistency=cached"
+    "source=zmk-repo-home,target=/home/ubuntu,type=volume,consistency=cached",
+    "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/home/ubuntu/.bashrc,type=bind,consistency=cached"
     // TODO: home 
     // "type=bind,source=${localWorkspaceFolder}/.home,target=/home/ubuntu"
     // Permission errors...
@@ -46,12 +55,15 @@
         // C/C++
         "ms-vscode.cpptools",
         // ms-vscode.cpptools-extension-pack
-        "usernamehw.errorlens"
+        "usernamehw.errorlens",
+        "skellock.just",
+        "redhat.vscode-yaml"
       ],
       "settings": {
         "editor.formatOnSave": true,
         "[dts]": {
           // "editor.formatOnSave": false
+          //   "editor.defaultFormatter": "legale.dts-formatter"
         },
         "files.associations": {
           "*.keymap": "dts",
@@ -59,14 +71,10 @@
           "*.overlay": "dts",
           "*.conf": "properties"
         },
-        "terminal.integrated.shell.linux": "/bin/bash"
-        // "[dts]": {
-        //   "editor.defaultFormatter": "legale.dts-formatter"
-        // }
+        "terminal.integrated.shell.linux": "/bin/bash",
+        // Ext: redhat.vscode-yaml
+        "redhat.telemetry.enabled": false
       }
     }
-  },
-  "forwardPorts": [
-    // 3000
-  ]
+  }
 }

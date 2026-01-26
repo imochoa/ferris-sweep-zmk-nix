@@ -57,14 +57,16 @@ devc-build:
     devcontainer build \
       --workspace-folder "{{ justfile_directory() }}" \
       --docker-path podman \
+      --docker-compose-path podman-compose \
       --remove-existing-container
 
 devc-up:
     devcontainer up \
       --workspace-folder "{{ justfile_directory() }}" \
       --docker-path podman \
-      --remove-existing-container \
-      --skip-post-attach
+      --docker-compose-path podman-compose \
+      --remove-existing-container
+    #   --skip-post-attach
     podman ps --last 1
 
 mkdirs:

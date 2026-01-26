@@ -37,11 +37,21 @@ _default:
 #       echo "No collection to process with dynamic-{{ context }}"
 #     fi
 
-devc-exec +recipe: devc-up
-    devcontainer exec \
-      --workspace-folder "{{ justfile_directory() }}" \
-      --docker-path podman \
-      -- just {{ recipe }}
+devc-exec +recipe:
+    #!/usr/bin/env bash
+    if [ -z "$IS_DEVCONTAINER" ]; then
+      printf "NOT in devc\n"
+      just devc-up
+      devcontainer exec \
+        --workspace-folder "{{ justfile_directory() }}" \
+        --docker-path podman \
+        --docker-compose-path podman-compose \
+        -- just {{ recipe }}
+    else
+      printf "IN devc\n"
+      just {{ recipe }}
+    fi
+
 
 devc-build:
     devcontainer build \

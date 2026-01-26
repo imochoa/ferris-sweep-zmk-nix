@@ -22,16 +22,12 @@
     "Zephyr_DIR": "/workspaces/ferris-zmk/zephyr/share/zephyr-package/cmake"
   },
   "postAttachCommand": "./.devcontainer/scripts/postAttachCommand.sh",
+  "workspaceFolder": "/workspaces/ferris-zmk",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/ferris-zmk,type=bind,consistency=cached",
   "mounts": [
-    // "source=${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,target=/home/ubuntu/.ssh,type=bind,consistency=cached",
     // podman volume create --uid 1000 --gid 1000 zmk-repo-home
     "source=zmk-repo-home,target=/home/ubuntu,type=volume,consistency=cached",
     "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/home/ubuntu/.bashrc,type=bind,consistency=cached"
-    // TODO: home 
-    // "type=bind,source=${localWorkspaceFolder}/.home,target=/home/ubuntu"
-    // Permission errors...
-    // "type=bind,source=/tmp/ssh-agent.sock,target=/ssh-agent,idmap=true"
-    // "type=bind,source=/tmp/ssh-agent.sock,target=/ssh-agent,rw=true"
   ],
   "customizations": {
     "vscode": {

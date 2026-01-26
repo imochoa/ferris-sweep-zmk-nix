@@ -9,7 +9,7 @@ out := absolute_path( justfile_directory() + "/firmware")
 [no-cd]
 _devc-check:
     #!/usr/bin/env bash
-    if [ -z "$IS_DEVCONTAINER" ]; then
+    if [ -z "${container}" ]; then
       printf "NOT in devc\n"
       exit 1
     fi
@@ -31,11 +31,6 @@ mkdirs: _devc-check
 
     # .west should be made via the init recipe!
     # mkdir -p "{{ justfile_directory() }}/.west"
-    #
-    # TODO: copy .home to ~/home, then mount
-    # in ~
-    # .cache
-    # .cmake
 
 [no-cd]
 hard-rmdirs: _devc-check && mkdirs

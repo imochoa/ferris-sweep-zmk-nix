@@ -12,34 +12,10 @@ mod in-devc ".just/in-devc.just"
 _default:
     @just --list --list-submodules
 
-# gh-actions-build-user-config:
-#   # no node in the neko 
-#     nix run nixpkgs#act -- \
-#     --action-offline-mode \
-#     --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
-#     --container-architecture linux/amd64 \
-#     --workflows ".github/workflows/build-user-config.yml"
-#     # nix run nixpkgs#act -- \
-#     # --action-offline-mode \
-#     # --artifact-server-path "{{ justfile_directory() }}/.artifacts" \
-#     # --container-architecture linux/amd64 \
-#     # --platform ubuntu-latest=-self-hosted \
-#     # --platform ubuntu-22.04=-self-hosted \
-#     # --workflows ".github/workflows/build-user-config.yml"
-
-# recipe context +collection:
-#     #!/usr/bin/env bash
-#     if [ '{{ collection }}' != '' ]; then
-#       for item in {{ collection }}; do
-#         echo just dynamic-{{ context }} $item
-#       done
-#     else
-#       echo "No collection to process with dynamic-{{ context }}"
-#     fi
 
 devc-exec +recipe:
     #!/usr/bin/env bash
-    if [ -z "$IS_DEVCONTAINER" ]; then
+    if [ -z "${container}" ]; then
       printf "NOT in devc\n"
       just devc-up
       devcontainer exec \
@@ -52,6 +28,8 @@ devc-exec +recipe:
       just {{ recipe }}
     fi
 
+devc-reset:
+    podman volume rm zmk-repo-home --force
 
 devc-build:
     devcontainer build \

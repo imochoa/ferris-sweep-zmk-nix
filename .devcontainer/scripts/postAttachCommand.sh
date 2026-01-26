@@ -10,6 +10,16 @@ for dir in "." "${HOME}"; do
     [[ $(stat -c "%g" "${dir}") -eq 1000 ]] && echo -e "OK!" || echo -e "\033[0;41mOWNER WAS NOT 1000\033[0m"
 done
 
+just --version
+# uv --version
+west --version
+
+env
+
+: container=${container}
+: ZEPHYR_SDK_VERSION=${ZEPHYR_SDK_VERSION}
+: ZEPHYR_VERSION=${ZEPHYR_VERSION}
+
 just in-devc mkdirs
 
 

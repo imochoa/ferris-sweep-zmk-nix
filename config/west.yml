@@ -9,12 +9,7 @@
 #         └── revision: commit/branch/tag
 
 manifest:
-  # Marks that this file uses version 0.10 of the west manifest
-  # file format.
-  #
-  # An attempt to load this manifest file with west v0.8.0 will
-  # fail with an error message saying that west v0.10.0 or
-  # later is required.
+  # west version to use
   # version: "1.5.0"
   version: "1.2"
 

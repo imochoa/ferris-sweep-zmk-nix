@@ -10,13 +10,6 @@
       // "BASE_TAG": "4.1"
     }
   },
-  // "runArgs": [
-  //   "--userns=keep-id",
-  //   "--security-opt",
-  //   "label=disable"
-  // ],
-  // Rootless podman
-  // "updateRemoteUserUID": true,
   "containerEnv": {
     "CMAKE_PREFIX_PATH": "/workspaces/ferris-zmk/zephyr",
     "Zephyr_DIR": "/workspaces/ferris-zmk/zephyr/share/zephyr-package/cmake"
@@ -47,12 +40,17 @@
       "settings": {
         "editor.formatOnSave": true,
         "[dts]": {
-          // "editor.formatOnSave": false
-          //   "editor.defaultFormatter": "legale.dts-formatter"
+          "editor.defaultFormatter": "legale.dts-formatter"
+        },
+        "[jsonc]": {
+          "editor.defaultFormatter": "vscode.json-language-features"
+        },
+        "[yaml]": {
+          "editor.defaultFormatter": "redhat.vscode-yaml"
         },
         "files.associations": {
-          "*.keymap": "dts",
           "*.just": "just",
+          "*.keymap": "dts",
           "*.overlay": "dts",
           "*.conf": "properties"
         },

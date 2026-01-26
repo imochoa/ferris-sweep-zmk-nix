@@ -12,17 +12,15 @@ Local ZMK firmware build script using Docker/Podman.
 This script reads build.yaml and builds all configurations.
 """
 
-# import sys
-# import shutil
-# import tempfile
+# NO UV IN DEVCONTAINER
+# REWRITE TO GENERATE SHELL COMMANDS INSTEAD OF USING UV
+
+
 import os
 from pathlib import Path
 import yaml
 
-# import json
 import sh
-
-from sh import podman
 from sh import just
 
 from enum import StrEnum, auto

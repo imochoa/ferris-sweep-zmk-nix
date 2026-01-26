@@ -28,6 +28,7 @@ ferris*
 /modules
 /\.west
 /\.build
+/\.ruff_cache
 
 # container dirs
 /\.cache

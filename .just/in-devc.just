@@ -3,6 +3,10 @@ set shell := ["bash", "-euco", "pipefail"]
 
 out := absolute_path( justfile_directory() + "/firmware")
 
+
+
+[private]
+[no-cd]
 _devc-check:
     #!/usr/bin/env bash
     if [ -z "$IS_DEVCONTAINER" ]; then
@@ -10,6 +14,12 @@ _devc-check:
       exit 1
     fi
 
+[group('rust recipes')]
+[no-cd]
+reset-devcontainer:
+  podman volume rm zmk-repo-home --force
+
+[no-cd]
 mkdirs: _devc-check
     mkdir -p "{{ justfile_directory() }}/modules"
     mkdir -p "{{ justfile_directory() }}/zmk"
@@ -18,7 +28,6 @@ mkdirs: _devc-check
     mkdir -p "{{ justfile_directory() }}/tools"
     # mkdir -p "{{ justfile_directory() }}/bootloader"
     mkdir -p "{{ justfile_directory() }}/.home"
-    cp -r /tmp/home-backup/* "{{ justfile_directory() }}/.home/"
 
     # .west should be made via the init recipe!
     # mkdir -p "{{ justfile_directory() }}/.west"
@@ -28,6 +37,7 @@ mkdirs: _devc-check
     # .cache
     # .cmake
 
+[no-cd]
 hard-rmdirs: _devc-check && mkdirs
     rm -rf "{{ justfile_directory() }}/modules"
     rm -rf "{{ justfile_directory() }}/zmk"
@@ -39,21 +49,27 @@ hard-rmdirs: _devc-check && mkdirs
     rm -rf "{{ justfile_directory() }}/.home"
 
 # initialize west
-west-init: hard-rmdirs
+[no-cd]
+west-init:
     west init -l config
 
+[no-cd]
+west-reset: hard-rmdirs west-init
+
 # you might need to run this multiple times after "init"
+[no-cd]
 west-update:
     west update --fetch-opt=--filter=blob:none
     west zephyr-export
     git config --global --add safe.directory "{{ justfile_directory() }}/zmk"
     git config --global --add safe.directory "{{ justfile_directory() }}/zephyr"
 
-# update west
-update: _devc-check 
-    west update --fetch-opt=--filter=blob:none
+# # update west (why 2????)
+# update: _devc-check 
+#     west update --fetch-opt=--filter=blob:none
 
 # Builds with ZMK Studio
+[no-cd]
 build-firmware: _devc-check && _ls_out
     #!/usr/bin/env bash
     set -euxo pipefail
@@ -190,7 +206,7 @@ generic-build board shield snippet="" cmake_args="" artifact_name="": _devc-chec
       cp "${build}/zephyr/zmk.uf2" "${out}/${artifact_name}.uf2"
     fi
 
-
+[no-cd]
 _ls_out:
     ls -la "{{ out }}"
 

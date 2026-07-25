@@ -25,6 +25,13 @@ west --version
 
 env
 
+# TODO: 1
+# https://v0-3-branch.zmk.dev/docs/development/local-toolchain/ide-integration#create-a-compilation-database
+# west config build.cmake-args -- -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+
+# TODO: 2
+# https://v0-3-branch.zmk.dev/docs/development/local-toolchain/ide-integration#create-a-cc-configuration
+
 : container=${container}
 : ZEPHYR_SDK_VERSION=${ZEPHYR_SDK_VERSION}
 : ZEPHYR_VERSION=${ZEPHYR_VERSION}

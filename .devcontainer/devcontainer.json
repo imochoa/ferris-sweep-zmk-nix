@@ -6,20 +6,32 @@
     "dockerfile": "Dockerfile",
     "args": {
       "BASE_IMAGE": "docker.io/zmkfirmware/zmk-dev-arm",
-      "BASE_TAG": "3.5"
-      // "BASE_TAG": "4.1"
+      "ZEPHYR_VERSION": "3.5"
+      // "ZEPHYR_VERSION": "4.1"
     }
   },
   "containerEnv": {
-    "CMAKE_PREFIX_PATH": "/workspaces/ferris-zmk/zephyr",
-    "Zephyr_DIR": "/workspaces/ferris-zmk/zephyr/share/zephyr-package/cmake"
+    "ZEPHYR_BASE": "/workspace/zephyr",
+    "CMAKE_PREFIX_PATH": "/workspace/zephyr",
+    "Zephyr_DIR": "/workspace/zephyr/share/zephyr-package/cmake",
+    "HOME": "/home/ubuntu"
   },
   "postAttachCommand": "./.devcontainer/scripts/postAttachCommand.sh",
-  "workspaceFolder": "/workspaces/ferris-zmk",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/ferris-zmk,type=bind,consistency=cached",
+  // On macOS the host user is uid 501 (not 1000), so the bind-mounted
+  // workspace would be unwritable by the container's uid 1000. Map
+  // container uid/gid 1000 to the host user via keep-id.
+  "runArgs": [
+    "--userns=keep-id:uid=1000,gid=1000"
+  ],
+  "workspaceFolder": "/workspace",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
   "mounts": [
-    // podman volume create --uid 1000 --gid 1000 zmk-repo-home
-    "source=zmk-repo-home,target=/home/ubuntu,type=volume,consistency=cached",
+    // Use bind mounts (not named volumes) for everything: on macOS podman
+    // named volumes end up owned by an unmapped uid (999), which the
+    // container's uid 1000 cannot write to. Bind mounts are owned by the
+    // host user and map cleanly through keep-id.
+    "source=${localWorkspaceFolder}/.devcontainer/home,target=/home/ubuntu,type=bind,consistency=cached",
+    "source=${localWorkspaceFolder}/zephyr,target=/workspace/zephyr,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/.devcontainer/.bashrc,target=/home/ubuntu/.bashrc,type=bind,consistency=cached"
   ],
   "customizations": {
@@ -30,6 +42,9 @@
         "plorefice.devicetree",
         "legale.dts-formatter", // Does not work...
         "trond-snekvik.kconfig-lang", // Kconfig language support
+        "ms-vscode.cmake-tools",
+        "nordic-semiconductor.nrf-devicetree",
+        "ms-vscode.hexeditor",
         // C/C++
         "ms-vscode.cpptools",
         // ms-vscode.cpptools-extension-pack

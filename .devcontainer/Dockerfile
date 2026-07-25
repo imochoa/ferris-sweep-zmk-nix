@@ -3,11 +3,14 @@
 
 # FROM docker.io/zmkfirmware/zmk-dev-arm:4.1-branch
 ARG BASE_IMAGE=docker.io/zmkfirmware/zmk-dev-arm
-ARG BASE_TAG=3.5
+ARG ZEPHYR_VERSION=3.5
 
-# DO NOT INSTALL UV
+# WARN: DO NOT INSTALL UV
 
-FROM ${BASE_IMAGE}:${BASE_TAG}
+FROM ${BASE_IMAGE}:${ZEPHYR_VERSION}
+
+ARG ZEPHYR_VERSION
+ENV ZEPHYR_VERSION=${ZEPHYR_VERSION}
 
 RUN : \
   && apt-get update \

@@ -75,43 +75,37 @@ def main() -> None:
         obj[YML.cmake_args] = " ".join(set(obj[YML.cmake_args]))
         obj[YML.artifact_name] = " ".join(set(obj[YML.artifact_name]))
         builds.append(obj)
+        
+    build_cmds = []
 
     for i, build in enumerate(builds):
         print(f"Processing build {i}: {build}")
-        just(
-            [
-                "generic-build",
+        # print(build[YML.shield])
+        build_cmds.append(" ".join([
+        
+            "just",
+            "generic-build",
                 build[YML.board],
                 build[YML.shield],
                 build[YML.snippet],
                 build[YML.cmake_args],
-                build[YML.artifact_name],
-            ],
-            _fg=True,
-        )
+                build[YML.artifact_name],]
+                )
+                )
+        # just(
+        #     [
+        #         "generic-build",
+        #         build[YML.board],
+        #         build[YML.shield],
+        #         build[YML.snippet],
+        #         build[YML.cmake_args],
+        #         build[YML.artifact_name],
+        #     ],
+        #     _fg=True,
+        # )
+    print("All build commands:")
+    print("\n".join(build_cmds))
 
-    #     https://v0-3-branch.zmk.dev/docs/development/module-creation
-    #     https://v0-3-branch.zmk.dev/docs/development/local-toolchain/build-flash#building-with-external-modules
-    #     # Check if this is a module-based config
-    #     base_dir = "/tmp/zmk-build"
-    #     if (workspace_dir / "zephyr" / "module.yml").exists():
-    #         print("Detected zephyr module, using isolated directory")
-    #         extra_cmake_args += " -DZMK_EXTRA_MODULES='/workspace'"
-    #         base_dir = "/tmp/zmk-config"
-    #
-    #     try:
-    #         # Run the build in the ZMK container
-    #         run_container_build(
-    #             container_cmd=container_cmd,
-    #             workspace_dir=workspace_dir,
-    #             build_dir=build_dir,
-    #             base_dir=base_dir,
-    #             config_path=config_path,
-    #             board=board,
-    #             extra_west_args=extra_west_args,
-    #             extra_cmake_args=extra_cmake_args,
-    #             cmake_args=cmake_args,
-    #         )
 
 
 if __name__ == "__main__":

@@ -33,3 +33,4 @@ ferris*
 # container dirs
 /\.cache
 /\.home
+/.devcontainer/home

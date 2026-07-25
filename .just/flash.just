@@ -2,8 +2,8 @@ set positional-arguments := true
 
 set shell := ["bash", "-euco", "pipefail"]
 
-out := justfile_directory() + "/firmware"
-# out := absolute_path( justfile_directory() + "/firmware")
+out := justfile_dir() + "/firmware"
+# out := absolute_path( justfile_dir() + "/firmware")
 
 [no-cd]
 reset-firmware: (_flash_one "zmk_reset.uf2") (_flash_one "zmk_reset.uf2")

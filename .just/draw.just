@@ -4,8 +4,8 @@ set shell := ["bash", "-euco", "pipefail"]
 
 
 # draw := absolute_path('draw')
-draw := justfile_directory()/'draw'
-config := justfile_directory()/'config'
+draw := justfile_dir()/'draw'
+config := justfile_dir()/'config'
 
 # \ls ./flake.nix |  entr -d -c just layout-img
 [no-cd]
@@ -22,13 +22,13 @@ layout-img:
 
 [no-cd]
 local-layout:
-    firefox "file://{{ justfile_directory() }}/sweep_keymap.ortho.svg"
+    firefox "file://{{ justfile_dir() }}/sweep_keymap.ortho.svg"
     find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'pipx run keymap-drawer parse --columns 10 -z ./config/cradio.keymap > sweep_keymap.yaml && pipx run keymap-drawer draw sweep_keymap.yaml > sweep_keymap.ortho.svg'
 
 [no-cd]
 develop-layout:
     # @just layout-img
-    firefox "file://{{ justfile_directory() }}/result/layout.svg"
+    firefox "file://{{ justfile_dir() }}/result/layout.svg"
     # fd -epdf . result/ | head -n1 | xargs xdg-open
     # TODO: send command to refresh firefox??
     find "`pwd`/config/" -name '.*' -prune -o -print | entr -cd zsh -c 'nix build .#layoutImage'

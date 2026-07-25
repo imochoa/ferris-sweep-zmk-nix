@@ -26,7 +26,7 @@ n-podman-env:
     --rm -it \
     --workdir /workspaces \
     -v "{{mount}}/user":/root \
-    -v "{{justfile_directory()}}/config":/workspaces/config \
+    -v "{{justfile_dir()}}/config":/workspaces/config \
     -v "{{mount}}/zmk-config":/workspaces/zmk-config \
     -v "{{mount}}/zmk-modules":/workspaces/zmk-modules \
     -v "{{mount}}/zmk-zephyr":/workspaces/zephyr \
@@ -62,7 +62,7 @@ build-firmware: && _ls_out
         --build-dir "${build_dir}" \
         --board "nice_nano_v2" \
         --snippet "studio-rpc-usb-uart" \
-        "{{ justfile_directory() }}/zmk/app" \
+        "{{ justfile_dir() }}/zmk/app" \
         -- \
         -DZMK_CONFIG="{{ config }}" \
         -DSHIELD="{{ shield }}_left" \
@@ -78,7 +78,7 @@ build-firmware: && _ls_out
         -p \
         --build-dir "${build_dir}" \
         --board "nice_nano_v2" \
-        "{{ justfile_directory() }}/zmk/app" \
+        "{{ justfile_dir() }}/zmk/app" \
         -- \
         -DZMK_CONFIG="{{ config }}" \
         -DSHIELD="{{ shield }}_right";

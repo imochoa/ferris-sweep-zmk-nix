@@ -1,7 +1,7 @@
 set positional-arguments := true
 set shell := ["bash", "-euco", "pipefail"]
 
-alias b := build-all
+# alias b := build-all
 
 mod draw ".just/draw.just"
 mod flash ".just/flash.just"
@@ -19,13 +19,13 @@ devc-exec +recipe:
       printf "NOT in devc\n"
       just devc-up
       devcontainer exec \
-        --workspace-folder "{{ justfile_directory() }}" \
+        --workspace-folder "{{ justfile_dir() }}" \
         --docker-path podman \
         --docker-compose-path podman-compose \
-        -- just {{ recipe }}
+        -- bash -lc 'just "$@"' _ {{ recipe }}
     else
       printf "IN devc\n"
-      just {{ recipe }}
+      bash -c 'just "$@"' _ {{ recipe }}
     fi
 
 devc-reset:
@@ -33,14 +33,14 @@ devc-reset:
 
 devc-build:
     devcontainer build \
-      --workspace-folder "{{ justfile_directory() }}" \
+      --workspace-folder "{{ justfile_dir() }}" \
       --docker-path podman \
       --docker-compose-path podman-compose \
       --remove-existing-container
 
 devc-up:
     devcontainer up \
-      --workspace-folder "{{ justfile_directory() }}" \
+      --workspace-folder "{{ justfile_dir() }}" \
       --docker-path podman \
       --docker-compose-path podman-compose \
       --remove-existing-container
@@ -65,18 +65,20 @@ west-update:
 update:
     @just devc-exec in-devc update
 
-# Builds with ZMK Studio
-build-firmware:
-    @just devc-exec in-devc build-firmware
-
-generic-build +args:
-    @just devc-exec in-devc generic-build  {{ args }}
-
-# https://zmk.dev/docs/troubleshooting/connection-issues#reset-split-keyboard-procedure
-build-settings-reset-firmware:
-    @just devc-exec in-devc build-settings-reset-firmware
-
-build-all: build-firmware build-settings-reset-firmware
+generic-build board shield snippet="" cmake_args="" artifact_name="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -z "${container:-}" ]; then
+      just devc-up
+      devcontainer exec \
+        --workspace-folder "{{ justfile_dir() }}" \
+        --docker-path podman \
+        --docker-compose-path podman-compose \
+        -- bash -lc 'just in-devc generic-build "$@"' _ \
+        "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}"
+    else
+      just in-devc generic-build "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}"
+    fi
 
 fmt-just:
     @just --fmt --unstable

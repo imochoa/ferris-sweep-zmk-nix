@@ -60,7 +60,7 @@ build-firmware: && _ls_out
     west build \
         -p \
         --build-dir "${build_dir}" \
-        --board "nice_nano_v2" \
+        --board "nice_nano" \
         --snippet "studio-rpc-usb-uart" \
         "{{ justfile_dir() }}/zmk/app" \
         -- \
@@ -77,7 +77,7 @@ build-firmware: && _ls_out
     west build \
         -p \
         --build-dir "${build_dir}" \
-        --board "nice_nano_v2" \
+        --board "nice_nano" \
         "{{ justfile_dir() }}/zmk/app" \
         -- \
         -DZMK_CONFIG="{{ config }}" \

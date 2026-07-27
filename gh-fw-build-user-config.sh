@@ -38,8 +38,8 @@ shell: sh -e {0}
 #   zephyr_version: 4.1.0
 #   extra_west_args:
 #   extra_cmake_args: -DSHIELD="cradio_left"
-#   display_name: cradio_left - nice_nano_v2
-#   artifact_name: cradio_left-nice_nano_v2-zmk
+#   display_name: cradio_left - nice_nano
+#   artifact_name: cradio_left-nice_nano-zmk
 #
 west update --fetch-opt=--filter=tree:0
 
@@ -51,19 +51,19 @@ west zephyr-export
 #   zephyr_version: 4.1.0
 #   extra_west_args:
 #   extra_cmake_args: -DSHIELD="cradio_left"
-#   display_name: cradio_left - nice_nano_v2
-#   artifact_name: cradio_left-nice_nano_v2-zmk
+#   display_name: cradio_left - nice_nano
+#   artifact_name: cradio_left-nice_nano-zmk
 
 # BUILD
 west build -s zmk/app -d "/tmp/tmp.clhtAS7bsR" \
-  -b "nice_nano_v2" -- \
+  -b "nice_nano" -- \
   -DZMK_CONFIG=/__w/ferris-sweep-zmk-nix/ferris-sweep-zmk-nix/config \
   -DSHIELD="cradio_left"
 
 # RENAME
 mkdir "/tmp/tmp.clhtAS7bsR/artifacts"
 if [ -f "/tmp/tmp.clhtAS7bsR/zephyr/zmk.uf2" ]; then
-  cp "/tmp/tmp.clhtAS7bsR/zephyr/zmk.uf2" "/tmp/tmp.clhtAS7bsR/artifacts/cradio_left-nice_nano_v2-zmk.uf2"
+  cp "/tmp/tmp.clhtAS7bsR/zephyr/zmk.uf2" "/tmp/tmp.clhtAS7bsR/artifacts/cradio_left-nice_nano-zmk.uf2"
 elif [ -f "/tmp/tmp.clhtAS7bsR/zephyr/zmk.bin" ]; then
-  cp "/tmp/tmp.clhtAS7bsR/zephyr/zmk.bin" "/tmp/tmp.clhtAS7bsR/artifacts/cradio_left-nice_nano_v2-zmk.bin"
+  cp "/tmp/tmp.clhtAS7bsR/zephyr/zmk.bin" "/tmp/tmp.clhtAS7bsR/artifacts/cradio_left-nice_nano-zmk.bin"
 fi

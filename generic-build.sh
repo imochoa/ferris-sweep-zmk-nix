@@ -59,7 +59,7 @@ done
 
 # # # TODO: technically also .bin files exist?
 # # if [[ -f "${build}/zephyr/zmk.uf2" ]]; then
-# # # TODO: artifact_name cradio_left-nice_nano_v2-zmk.uf2"
+# # # TODO: artifact_name cradio_left-nice_nano-zmk.uf2"
 # #     cp "${build}/zephyr/zmk.uf2" "${out}/${artifact_name}.uf2"
 # # fi
 

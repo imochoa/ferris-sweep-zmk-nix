@@ -13,10 +13,17 @@ manifest:
   # version: "1.5.0"
   version: "1.2"
 
+  # ZMK main's app/west.yml enables Zephyr's `optional` module group
+  # (group-filter: [+optional]), which pulls large unused modules
+  # (tflite-micro, thrift) into optional/. Disable it here in the top-level
+  # manifest, which takes precedence over the imported filter.
+  group-filter: [-optional]
+
   defaults:
     # remote: urob
-    # revision: v0.4 # Pin everything to v0.4
-    revision: v0.3 # Pin everything to v0.3
+    # ZMK main development line (Zephyr 4.1). zmk is pinned to a specific commit
+    # below for reproducibility; this default applies to other projects.
+    revision: main
 
   remotes:
     - name: zmkfirmware
@@ -29,13 +36,13 @@ manifest:
   projects:
     - name: zmk
       remote: zmkfirmware
-      # revision: v0.4.0
-      revision: v0.3.0
+      # ZMK main @ 2026-07-21 (pulls Zephyr v4.1.0+zmk-fixes via app/west.yml)
+      revision: f84ef436cd8e88f9d1580a9b86bab2fae8d349c6
       import: app/west.yml
 
     - name: zmk-helpers
       remote: urob
-      revision: v0.3.0 # set to same version as zmk above
+      revision: v0.3 # latest urob tag; v2/Zephyr-4.1 safe
       path: modules/zmk/helpers
 
     #     # ZMK modules
@@ -52,21 +59,8 @@ manifest:
     # - name: zmk-unicode
     #   path: modules/zmk/unicode
 
-    # Temporarily overload Zephyr until
-    # https://github.com/zmkfirmware/zephyr/pull/40 is merged.
-    # - name: zephyr
-    #   revision: v3.5.0+zmk-fixes
-    #   clone-depth: 1
-    #   import:
-    #     # Only enable most commonly used boards. For less common hardware one
-    #     # may need to enable additional modules.
-    #     name-allowlist:
-    #       - cmsis
-    #       - hal_nordic
-    #       - hal_rpi_pico
-    #       - hal_stm32
-    #       - lvgl
-    #       - tinycrypt
+    # NOTE: Zephyr is pulled in transitively via zmk's app/west.yml
+    # (currently v4.1.0+zmk-fixes). No manual override is needed here.
 
   self:
     path: config

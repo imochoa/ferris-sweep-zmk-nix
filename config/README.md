@@ -30,24 +30,24 @@ CONFIG_ZMK_KEYBOARD_NAME="David's Corne"
 # control, add individual board + shield combinations to
 # the `include` property, e.g:
 #
-# board: [ "nice_nano_v2" ]
+# board: [ "nice_nano" ]
 # shield: [ "corne_left", "corne_right" ]
 # include:
 #   - board: bdn9_rev2
-#   - board: nice_nano_v2
+#   - board: nice_nano
 #     shield: reviung41
 #
 ---
 include:
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: corne_left nice_view_adapter nice_view
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: corne_right nice_view_adapter nice_view
-  - board: nice_nano_v2
+  - board: nice_nano
     shield: settings_reset
 ```
 
-3. Load settings_reset-nice_nano_v2-zmk.uf2 onto both boards
-4. Load corne_left nice_view_adapter nice_view-nice_nano_v2-zmk.uf2 onto left board
-5. Load corne_right nice_view_adapter nice_view-nice_nano_v2-zmk.uf2 onto right board
+3. Load settings_reset-nice_nano-zmk.uf2 onto both boards
+4. Load corne_left nice_view_adapter nice_view-nice_nano-zmk.uf2 onto left board
+5. Load corne_right nice_view_adapter nice_view-nice_nano-zmk.uf2 onto right board
 6. Done!

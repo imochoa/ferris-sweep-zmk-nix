@@ -35,8 +35,7 @@ devc-build:
     devcontainer build \
       --workspace-folder "{{ justfile_dir() }}" \
       --docker-path podman \
-      --docker-compose-path podman-compose \
-      --remove-existing-container
+      --docker-compose-path podman-compose
 
 devc-up:
     devcontainer up \
@@ -65,7 +64,7 @@ west-update:
 update:
     @just devc-exec in-devc update
 
-generic-build board shield snippet="" cmake_args="" artifact_name="":
+generic-build board shield snippet="" cmake_args="" artifact_name="" pristine="":
     #!/usr/bin/env bash
     set -euo pipefail
     if [ -z "${container:-}" ]; then
@@ -75,9 +74,9 @@ generic-build board shield snippet="" cmake_args="" artifact_name="":
         --docker-path podman \
         --docker-compose-path podman-compose \
         -- bash -lc 'just in-devc generic-build "$@"' _ \
-        "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}"
+        "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}" "{{pristine}}"
     else
-      just in-devc generic-build "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}"
+      just in-devc generic-build "{{board}}" "{{shield}}" "{{snippet}}" "{{cmake_args}}" "{{artifact_name}}" "{{pristine}}"
     fi
 
 fmt-just:

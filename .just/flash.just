@@ -8,14 +8,14 @@ out := justfile_dir() + "/firmware"
 [no-cd]
 reset-firmware: (_flash_one "zmk_reset.uf2") (_flash_one "zmk_reset.uf2")
 # reset-firmware: (_flash "zmk_reset.uf2" "zmk_reset.uf2")
-# settings_reset-nice_nano_v2-zmk.uf2
+# settings_reset-nice_nano-zmk.uf2
 
 
 [no-cd]
-firmware: (_flash_one "cradio_left-nice_nano_v2-zmk.uf2") (_flash_one "cradio_right-nice_nano_v2-zmk.uf2")
+firmware: (_flash_one "cradio_left-nice_nano-zmk.uf2") (_flash_one "cradio_right-nice_nano-zmk.uf2")
 # firmware: (_flash "zmk_left.uf2" "zmk_right.uf2")
-# cradio_left-nice_nano_v2-zmk.uf2
-# cradio_right-nice_nano_v2-zmk.uf2
+# cradio_left-nice_nano-zmk.uf2
+# cradio_right-nice_nano-zmk.uf2
 
 [no-cd]
 _flash fm_left fm_right:

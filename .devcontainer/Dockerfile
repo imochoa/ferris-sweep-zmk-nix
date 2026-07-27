@@ -1,9 +1,8 @@
 # https://github.com/zmkfirmware/zmk
 # https://github.com/zmkfirmware/zmk/blob/main/.devcontainer/Dockerfile
 
-# FROM docker.io/zmkfirmware/zmk-dev-arm:4.1-branch
 ARG BASE_IMAGE=docker.io/zmkfirmware/zmk-dev-arm
-ARG ZEPHYR_VERSION=3.5
+ARG ZEPHYR_VERSION=4.1-branch
 
 # WARN: DO NOT INSTALL UV
 

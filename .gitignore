@@ -26,6 +26,7 @@ ferris*
 /zmk
 /zephyr
 /modules
+/optional
 /\.west
 /\.build
 /\.ruff_cache

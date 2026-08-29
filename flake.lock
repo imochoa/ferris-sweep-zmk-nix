@@ -23,11 +23,11 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1755268003,
-        "narHash": "sha256-nNaeJjo861wFR0tjHDyCnHs1rbRtrMgxAKMoig9Sj/w=",
+        "lastModified": 1764947035,
+        "narHash": "sha256-EYHSjVM4Ox4lvCXUMiKKs2vETUSL5mx+J2FfutM7T9w=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "32f313e49e42f715491e1ea7b306a87c16fe0388",
+        "rev": "a672be65651c80d3f592a89b3945466584a22069",
         "type": "github"
       },
       "original": {
@@ -69,11 +69,11 @@
     "zephyr": {
       "flake": false,
       "locked": {
-        "lastModified": 1750059894,
-        "narHash": "sha256-8IL9IK8R2OjePnSoT+wHrwFkLIZGw61xjedUkMzE+l4=",
+        "lastModified": 1755558002,
+        "narHash": "sha256-7QpHcotCG+m16PvGdB+aZrU+5p/FSXhmkmtMoUkKqs4=",
         "owner": "zmkfirmware",
         "repo": "zephyr",
-        "rev": "628a0d85e36938dddb6f0dfc6dc902de7359711c",
+        "rev": "dacab4875df72109b96cc8977547a0dc04875bcd",
         "type": "github"
       },
       "original": {
@@ -115,11 +115,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1755391339,
-        "narHash": "sha256-spTAYFcLG8IhiZFEsLTiLZAJTgwikbFNqxIJxs80VmU=",
+        "lastModified": 1765068173,
+        "narHash": "sha256-Gks1rTLteKCw/q6qo3zPcUwEdxFQS/2yHc21l8YK1pY=",
         "owner": "lilyinstarlight",
         "repo": "zmk-nix",
-        "rev": "58899a60291980765355b8162c6f360f0151905a",
+        "rev": "f02a78c8c06d283ea1399c14aaec308bfb77dc1b",
         "type": "github"
       },
       "original": {

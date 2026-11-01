@@ -6,11 +6,13 @@ on:
   #     - config/**
   #     - build.yaml
 
+permissions:
+  contents: read
+
 jobs:
   firmware-build-user-configs:
-    # TODO: pin it?
-    # https://github.com/zmkfirmware/zmk/blob/main/.github/workflows/
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
+    # Pinned to the same ZMK commit as config/west.yml; bump both together.
+    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@f84ef436cd8e88f9d1580a9b86bab2fae8d349c6
     with:
       build_matrix_path: "build.yaml"
       config_path: "config"

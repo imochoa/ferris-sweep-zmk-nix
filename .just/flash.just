@@ -5,14 +5,14 @@ set shell := ["bash", "-euco", "pipefail"]
 out := justfile_dir() + "/firmware"
 # out := absolute_path( justfile_dir() + "/firmware")
 
+# just runs a dependency with identical arguments only once, so the side
+# argument keeps the two settings_reset flashes distinct.
 [no-cd]
-reset-firmware: (_flash_one "zmk_reset.uf2") (_flash_one "zmk_reset.uf2")
-# reset-firmware: (_flash "zmk_reset.uf2" "zmk_reset.uf2")
-# settings_reset-nice_nano-zmk.uf2
+reset-firmware: (_flash_one "settings_reset-nice_nano-zmk.uf2" "left") (_flash_one "settings_reset-nice_nano-zmk.uf2" "right")
 
 
 [no-cd]
-firmware: (_flash_one "cradio_left-nice_nano-zmk.uf2") (_flash_one "cradio_right-nice_nano-zmk.uf2")
+firmware: (_flash_one "cradio_left-nice_nano-zmk.uf2" "left") (_flash_one "cradio_right-nice_nano-zmk.uf2" "right")
 # firmware: (_flash "zmk_left.uf2" "zmk_right.uf2")
 # cradio_left-nice_nano-zmk.uf2
 # cradio_right-nice_nano-zmk.uf2
@@ -55,7 +55,7 @@ _flash fm_left fm_right:
   done
 
 [no-cd]
-_flash_one firmware:
+_flash_one firmware side:
   #!/usr/bin/env bash
   set -euxo pipefail
 
@@ -77,7 +77,7 @@ _flash_one firmware:
   uf2="{{ out }}/${firmware}"
   [ ! -f "${uf2}" ] && exit 1
 
-  printf "Bootloader ${firmware}\n"
+  printf "Bootloader ${firmware} ({{side}})\n"
   rm -rf "${ts}" && touch "${ts}"
   res=""
   while [[ -z ${res} ]]; do

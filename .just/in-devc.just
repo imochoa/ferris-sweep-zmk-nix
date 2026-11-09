@@ -142,3 +142,33 @@ generic-build board shield snippet="" cmake_args="" artifact_name="" pristine=""
 _ls_out:
     ls -la "{{ out }}"
 
+
+# Builds the copy that the host recipe `blepad-build` placed in .build/blepad-src.
+# ZMK is only used for its nice!nano board definition, as in 4key-macropad.
+[no-cd]
+blepad-build mode: _devc-check && _ls_out
+    #!/usr/bin/env bash
+    set -euxo pipefail
+    root="{{ justfile_dir() }}"
+    build="$root/.build/blepad-{{ mode }}"
+    # Every west project except config/: it is the ZMK config module, which
+    # only makes sense inside a ZMK build
+    modules=$(west list -f '{abspath}' | grep -v -x -e "$root/config" -e "$root/zephyr" | paste -sd ';' -)
+    args=(
+      -DZEPHYR_MODULES="$modules"
+      -DZEPHYR_EXTRA_MODULES="$root/zmk/app/module"
+      -DEXTRA_DTC_OVERLAY_FILE="$root/blepad/sweep-right.overlay"
+      '-DCONFIG_BT_DEVICE_NAME="Sweep Pad"'
+    )
+    snippet=()
+    if [[ "{{ mode }}" == debug ]]; then
+      # Same console flags as 4key-macropad's build-ble.sh debug. Never add
+      # CONFIG_LOG_MODE_IMMEDIATE: synchronous USB logging starves the radio.
+      snippet=(-S cdc-acm-console)
+      args+=(-DCONFIG_SERIAL=y -DCONFIG_CONSOLE=y -DCONFIG_LOG=y
+             -DCONFIG_USB_DEVICE_INITIALIZE_AT_BOOT=y -DCONFIG_UART_LINE_CTRL=n)
+    fi
+    mkdir -p "{{ out }}"
+    west build --pristine -s "$root/.build/blepad-src" -d "$build" \
+      -b nice_nano/nrf52840 "${snippet[@]}" -- "${args[@]}"
+    cp "$build/zephyr/zephyr.uf2" "{{ out }}/sweep-right-blepad-{{ mode }}.uf2"

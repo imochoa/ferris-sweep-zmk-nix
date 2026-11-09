@@ -17,6 +17,10 @@ firmware: (_flash_one "cradio_left-nice_nano-zmk.uf2") (_flash_one "cradio_right
 # cradio_left-nice_nano-zmk.uf2
 # cradio_right-nice_nano-zmk.uf2
 
+# Right half as a glasses pad (blepad/README.md); back with `firmware`
+[no-cd]
+blepad mode="debug": (_flash_one "sweep-right-blepad-" + mode + ".uf2")
+
 [no-cd]
 _flash fm_left fm_right:
   #!/usr/bin/env bash

@@ -33,6 +33,7 @@ There are **two build paths**:
 ├── justfile                host recipes (run via `just <recipe>` from repo root)
 ├── flake.nix / flake.lock  Nix build path (zmk-nix) — OLD 3.5 stack, see note
 ├── nix/                    Nix package/derivation helpers
+├── blepad/                 right half as a glasses BLE pad (not ZMK; see its README)
 ├── generic-build.sh        standalone container build via build.yaml (reference)
 ├── local-build.{sh,py}     scratch/reference build helpers
 ├── zmk/ zephyr/ modules/ optional/ tools/ .west/ .build/   west-managed (gitignored)

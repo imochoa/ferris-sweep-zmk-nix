@@ -1,0 +1,45 @@
+/*
+ * Right half of the Sweep as an 8-key glasses pad: pins for Ben Vallack's
+ * 4 Key BLE pad firmware, applied on top of its app.overlay via
+ * EXTRA_DTC_OVERLAY_FILE (see blepad/README.md).
+ *
+ * Pins come from ZMK's cradio shield (direct-wired, GPIO to GND). On the right
+ * half, kscan index i is matrix column 17+i, which places the keys as:
+ *
+ *   top:    RT0 RT1 RT2 RT3 RT4  = pro_micro 21 20 19 18  7
+ *   home:   RM0 RM1 RM2 RM3 RM4  = pro_micro  1 10 16 14 15
+ *   bottom: RB0 RB1 RB2 RB3 RB4  = pro_micro  6  5  4  3  2
+ *   thumbs: RH0 RH1              = pro_micro  9  8
+ *
+ * Pad positions (key index + 1). 1-4 form a 2x2 under index and middle finger,
+ * in the same order as Ben's 2x2 pad, so its server bindings carry over:
+ *
+ *   1 RT1   2 RT2   8 RT3
+ *   3 RM1   4 RM2   7 RM3
+ *   5 RH0 (inner thumb, Ben's trigger key)   6 RH1 (outer thumb)
+ *
+ * pro_micro 0/1 (the board's UART pins) are avoided.
+ */
+
+&button0 { gpios = <&pro_micro 20 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; };	/* RT1 */
+&button1 { gpios = <&pro_micro 19 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; };	/* RT2 */
+&button2 { gpios = <&pro_micro 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; };	/* RM1 */
+&button3 { gpios = <&pro_micro 16 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; };	/* RM2 */
+&button4 { gpios = <&pro_micro 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>; };	/* RH0 */
+
+/ {
+	buttons {
+		button5: button_5 {
+			gpios = <&pro_micro 8 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;	/* RH1 */
+			zephyr,code = <INPUT_KEY_6>;
+		};
+		button6: button_6 {
+			gpios = <&pro_micro 14 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;	/* RM3 */
+			zephyr,code = <INPUT_KEY_7>;
+		};
+		button7: button_7 {
+			gpios = <&pro_micro 18 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>;	/* RT3 */
+			zephyr,code = <INPUT_KEY_8>;
+		};
+	};
+};

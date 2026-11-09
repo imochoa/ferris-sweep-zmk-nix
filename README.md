@@ -135,3 +135,9 @@ Some combos where added to make it possible to use the keyboard one handed. They
 # https://zmk.dev/docs/troubleshooting/connection-issues#building-a-reset-firmware
 
 # If you use a local development environment to build firmware instead of GitHub Actions, pass the -DSHIELD=settings_reset argument when building, omitting all other -DSHIELD arguments.
+
+## Right half as a glasses pad
+
+[`blepad/`](blepad/README.md): an alternative firmware that turns the right
+half into an 8-key Bluetooth pad for an Even G2 glasses setup (not a keyboard).
+`just blepad-build`, then `just flash blepad`.

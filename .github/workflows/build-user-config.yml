@@ -6,6 +6,9 @@ on:
   #     - config/**
   #     - build.yaml
 
+permissions:
+  contents: read
+
 jobs:
   firmware-build-user-configs:
     # TODO: pin it?

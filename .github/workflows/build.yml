@@ -6,6 +6,9 @@ on:
   #     - config/**
   #     - build.yaml
 
+permissions:
+  contents: read
+
 jobs:
   build:
     # TODO: pin it?
